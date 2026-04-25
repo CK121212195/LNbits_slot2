@@ -76,7 +76,7 @@
       );
     }
 
-    /* Ambient glow — now pink + gold */
+    /* Ambient glow */
     .ambient {
       position: fixed;
       top: 0; left: 50%; transform: translateX(-50%);
@@ -88,7 +88,6 @@
       pointer-events: none; z-index: 0;
     }
 
-    /* ✨ Floating sparkles */
     @keyframes sparkleFloat {
       0%   { transform: translateY(0) scale(1);   opacity: 0; }
       20%  { opacity: 1; }
@@ -146,7 +145,7 @@
     select.lang-select:hover { border-color: var(--pink); }
 
     /* ============================================================
-       MAIN COLUMN
+       MAIN COLUMN & PANELS
     ============================================================ */
     .main {
       width: 100%; max-width: 440px;
@@ -155,9 +154,6 @@
       position: relative; z-index: 2;
     }
 
-    /* ============================================================
-       PANEL
-    ============================================================ */
     .panel {
       background: var(--bg2);
       border: 1px solid var(--border);
@@ -173,30 +169,15 @@
     }
 
     /* ============================================================
-       BALANCE BAR
+       BALANCE & DEPOSIT
     ============================================================ */
-    .balance-bar {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-    }
-    .bal-cell {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 10px; padding: 10px 12px;
-    }
-    .bal-label {
-      font-size: 8px; color: var(--muted);
-      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px;
-    }
-    .bal-val {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 11px; color: var(--green);
-    }
+    .balance-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .bal-cell { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }
+    .bal-label { font-size: 8px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+    .bal-val { font-family: 'Press Start 2P', monospace; font-size: 11px; color: var(--green); }
     .bal-val.gold { color: var(--gold); }
     .bal-val sup { font-size: 7px; color: var(--muted); margin-left: 3px; }
 
-    /* ============================================================
-       FREE BANNER
-    ============================================================ */
     .free-banner {
       background: linear-gradient(135deg, #1A0D30 0%, #0D1A30 100%);
       border: 1px solid #3A1F6A;
@@ -207,9 +188,6 @@
     .free-banner .icon { font-size: 22px; flex-shrink: 0; }
     .free-banner strong { display: block; font-size: 10px; margin-bottom: 2px; color: var(--pink); }
 
-    /* ============================================================
-       DEPOSIT BUTTONS
-    ============================================================ */
     .deposit-section { display: none; flex-direction: column; gap: 8px; }
     .deposit-section.visible { display: flex; }
     .dep-label {
@@ -273,7 +251,7 @@
     }
 
     /* ============================================================
-       BET CONTROLS
+       BET CONTROLS & SPIN
     ============================================================ */
     .bet-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
     .bet-label { font-size: 8px; color: var(--muted); letter-spacing: 2px; flex-shrink: 0; }
@@ -302,9 +280,6 @@
     }
     .bet-max:hover { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 8px var(--gold-glow); }
 
-    /* ============================================================
-       SPIN BUTTON
-    ============================================================ */
     .spin-btn {
       width: 100%; padding: 17px;
       background: linear-gradient(135deg, var(--gold) 0%, #FFA040 40%, var(--pink) 100%);
@@ -329,7 +304,7 @@
     .spin-btn:disabled { background: #1C1828; color: #3A3060; cursor: not-allowed; box-shadow: none; }
 
     /* ============================================================
-       RESULT MESSAGE
+       RESULT MESSAGE & ACTION AREA (THE-FIAT-BURNER FLOW)
     ============================================================ */
     .result-msg {
       text-align: center; margin-top: 10px;
@@ -347,11 +322,8 @@
     }
     @keyframes jackpotPulse { from { opacity: .7; } to { opacity: 1; } }
 
-    /* ============================================================
-       SHARE BUTTON
-    ============================================================ */
     .share-btn {
-      display: none; width: 100%; margin-top: 10px; padding: 12px;
+      width: 100%; padding: 12px;
       background: transparent; border: 1px solid var(--border-hi);
       border-radius: 10px; color: var(--text);
       font-family: 'Press Start 2P', monospace;
@@ -397,7 +369,7 @@
     .btn-modal-close:hover { border-color: var(--border-hi); color: var(--text); }
 
     /* ============================================================
-       WIN OVERLAY
+       WIN OVERLAY (THE-FIAT-BURNER FLOW)
     ============================================================ */
     .win-overlay {
       display: none; position: fixed; inset: 0;
@@ -446,21 +418,15 @@
     .btn-win-skip:hover { border-color: var(--border-hi); color: var(--text); }
 
     /* ============================================================
-       STATS ROW
+       STATS, HOWTO, LEADERBOARD, ETC...
     ============================================================ */
     .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-    .stat-cell {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 10px; padding: 10px 8px; text-align: center;
-    }
+    .stat-cell { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 8px; text-align: center; }
     .stat-label { font-size: 8px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; }
     .stat-val { font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--text); }
     .stat-val.green { color: var(--green); }
     .stat-val.gold  { color: var(--gold); }
 
-    /* ============================================================
-       PAYTABLE + HOWTO
-    ============================================================ */
     .section-title {
       font-family: 'Press Start 2P', monospace; font-size: 9px;
       background: linear-gradient(90deg, var(--gold), var(--pink));
@@ -478,16 +444,10 @@
 
     .howto-steps { display: flex; flex-direction: column; gap: 12px; }
     .howto-step { display: flex; gap: 12px; align-items: flex-start; }
-    .howto-num {
-      font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--pink);
-      flex-shrink: 0; margin-top: 2px;
-    }
+    .howto-num { font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--pink); flex-shrink: 0; margin-top: 2px; }
     .howto-text strong { display: block; font-size: 10px; margin-bottom: 4px; color: var(--text); }
     .howto-text p { font-size: 11px; color: var(--muted); line-height: 1.6; }
 
-    /* ============================================================
-       LEADERBOARD
-    ============================================================ */
     .lb-row { display: flex; align-items: center; padding: 9px 4px; border-bottom: 1px solid var(--border); font-size: 12px; }
     .lb-row:last-child { border-bottom: none; }
     .lb-rank { font-size: 10px; color: var(--muted); margin-right: 10px; width: 26px; text-align: center; flex-shrink: 0; }
@@ -497,100 +457,6 @@
     .lb-row.rank-2 .lb-rank { color: #C0C0C0; }
     .lb-row.rank-3 .lb-rank { color: #CD7F32; }
 
-    /* ============================================================
-       DISTRIBUTION / ODDS PANEL  📊
-    ============================================================ */
-    .dist-section { display: flex; flex-direction: column; gap: 14px; }
-
-    .dist-sub { font-size: 9px; color: var(--muted); letter-spacing: 2px; text-align: center; margin-bottom: 4px; }
-
-    /* Symbol probability bars */
-    .sym-bars { display: flex; flex-direction: column; gap: 6px; }
-    .sym-bar-row { display: flex; align-items: center; gap: 8px; }
-    .sym-icon { font-size: 16px; width: 24px; text-align: center; flex-shrink: 0; }
-    .sym-bar-track {
-      flex: 1; height: 10px; background: var(--bg); border-radius: 99px;
-      overflow: hidden; border: 1px solid var(--border);
-    }
-    .sym-bar-fill {
-      height: 100%; border-radius: 99px;
-      transition: width .8s cubic-bezier(.4,0,.2,1);
-    }
-    .sym-bar-pct { font-size: 9px; color: var(--muted); width: 34px; text-align: right; flex-shrink: 0; }
-
-    /* Win outcome table */
-    .odds-table { width: 100%; border-collapse: collapse; }
-    .odds-table th { font-size: 7px; color: var(--pink); letter-spacing: 2px; padding: 6px 4px; border-bottom: 1px solid var(--border); text-align: left; }
-    .odds-table th:last-child { text-align: right; }
-    .odds-table td { font-size: 10px; padding: 7px 4px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-    .odds-table tr:last-child td { border-bottom: none; }
-    .odds-table .sym-cell { font-size: 14px; letter-spacing: 2px; }
-    .odds-table .mult-cell { font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--gold); }
-    .odds-table .prob-cell { color: var(--cyan); font-size: 10px; }
-    .odds-table .contrib-cell { color: var(--muted); font-size: 9px; text-align: right; }
-
-    /* RTP Meter */
-    .rtp-box {
-      background: var(--bg); border-radius: 12px; padding: 14px;
-      border: 1px solid var(--border); text-align: center;
-    }
-    .rtp-label { font-size: 8px; color: var(--muted); letter-spacing: 2px; margin-bottom: 8px; }
-    .rtp-meter-track {
-      height: 16px; background: #1A1438; border-radius: 99px; overflow: hidden;
-      border: 1px solid var(--border); position: relative; margin-bottom: 8px;
-    }
-    .rtp-meter-fill {
-      height: 100%; border-radius: 99px;
-      transition: width 1.2s cubic-bezier(.4,0,.2,1);
-      position: relative;
-    }
-    .rtp-100-mark {
-      position: absolute; top: 0; bottom: 0; left: 66.67%;  /* 100/150 * 100 */
-      width: 2px; background: rgba(255,255,255,.4); z-index: 2;
-    }
-    .rtp-100-label {
-      position: absolute; top: -16px; left: 66%;
-      font-size: 7px; color: rgba(255,255,255,.4);
-    }
-    .rtp-value {
-      font-family: 'Press Start 2P', monospace; font-size: 18px;
-      margin-bottom: 6px;
-    }
-    .rtp-verdict {
-      font-size: 9px; line-height: 1.8; padding: 8px 12px;
-      border-radius: 8px; letter-spacing: 1px;
-    }
-    .rtp-verdict.player-edge {
-      background: rgba(46,255,138,.08);
-      border: 1px solid rgba(46,255,138,.25);
-      color: var(--green);
-    }
-    .rtp-verdict.house-edge {
-      background: rgba(255,110,180,.08);
-      border: 1px solid rgba(255,110,180,.25);
-      color: var(--pink);
-    }
-
-    /* Win probability summary */
-    .win-prob-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-    }
-    .win-prob-cell {
-      background: var(--bg); border: 1px solid var(--border);
-      border-radius: 10px; padding: 10px; text-align: center;
-    }
-    .win-prob-cell .wp-label { font-size: 8px; color: var(--muted); margin-bottom: 4px; letter-spacing: 1px; }
-    .win-prob-cell .wp-val {
-      font-family: 'Press Start 2P', monospace; font-size: 11px;
-    }
-    .win-prob-cell .wp-val.good { color: var(--green); }
-    .win-prob-cell .wp-val.warn { color: var(--gold); }
-    .win-prob-cell .wp-val.pink { color: var(--pink); }
-    .win-prob-cell .wp-val.cyan { color: var(--cyan); }
-
-    /* ============================================================
-       CONFETTI (upgraded with more colors)
-    ============================================================ */
     .confetti-piece {
       position: fixed; width: 8px; height: 8px;
       border-radius: 2px; pointer-events: none; z-index: 400;
@@ -601,9 +467,6 @@
       100% { transform: translateY(320px) rotate(720deg); opacity: 0; }
     }
 
-    /* ============================================================
-       FOOTER
-    ============================================================ */
     .footer {
       margin-top: 40px; font-size: 10px; color: var(--muted);
       text-align: center; line-height: 2.2; padding: 0 16px; position: relative; z-index: 2;
@@ -692,7 +555,13 @@
       <span data-i18n="spin">SPIN ⚡</span>
     </button>
     <div class="result-msg" id="result-msg" data-i18n="msg_ready">— READY TO SPIN —</div>
-    <button class="share-btn" id="share-btn" onclick="shareToX()">🐦 <span data-i18n="share">SHARE TO X / TWITTER</span></button>
+    
+    <!-- スピン完了後のアクションエリア (The-Fiat-Burner Flow) -->
+    <div id="post-action-area" style="display: none; flex-direction: column; gap: 10px; margin-top: 10px;">
+      <div class="hype-quote" id="main-hype-quote" style="text-align: center; font-size: 11px; color: var(--pink); font-style: italic; margin-bottom: 5px; line-height: 1.4;"></div>
+      <button class="share-btn" style="display:block; margin-top:0;" onclick="shareToX()">🐦 <span data-i18n="share">SHARE TO X / TWITTER</span></button>
+      <button class="btn-win-submit" style="width:100%; margin-bottom:0;" onclick="showDepositSectionAndScroll()">⚡ <span data-i18n="dep_more">DEPOSIT MORE SATS</span></button>
+    </div>
   </div>
 
   <!-- Session stats -->
@@ -760,55 +629,6 @@
     </table>
   </div>
 
-  <!-- ============================================================
-       ODDS ANALYSIS PANEL 📊
-  ============================================================ -->
-  <div class="panel">
-    <div class="section-title" data-i18n="dist_title">📊 ODDS ANALYSIS</div>
-    <div class="dist-section">
-
-      <!-- Symbol probability bars -->
-      <div>
-        <div class="dist-sub" data-i18n="dist_sym_sub">SYMBOL DRAW PROBABILITY</div>
-        <div class="sym-bars" id="sym-bars"></div>
-      </div>
-
-      <!-- Win summary grid -->
-      <div class="win-prob-grid" id="win-prob-grid"></div>
-
-      <!-- Outcome breakdown table -->
-      <div>
-        <div class="dist-sub" data-i18n="dist_outcome_sub">WIN OUTCOME BREAKDOWN</div>
-        <table class="odds-table">
-          <thead>
-            <tr>
-              <th data-i18n="dist_col_combo">COMBO</th>
-              <th data-i18n="dist_col_mult">MULT</th>
-              <th data-i18n="dist_col_prob">PROB</th>
-              <th data-i18n="dist_col_contrib">RTP CONTRIB</th>
-            </tr>
-          </thead>
-          <tbody id="odds-tbody"></tbody>
-        </table>
-      </div>
-
-      <!-- RTP Meter -->
-      <div class="rtp-box">
-        <div class="rtp-label" data-i18n="dist_rtp_label">RETURN TO PLAYER (RTP)</div>
-        <div style="position:relative; margin-bottom: 20px;">
-          <div class="rtp-100-label">100%</div>
-          <div class="rtp-meter-track">
-            <div class="rtp-100-mark"></div>
-            <div class="rtp-meter-fill" id="rtp-meter-fill" style="width:0%"></div>
-          </div>
-        </div>
-        <div class="rtp-value" id="rtp-value">—</div>
-        <div class="rtp-verdict" id="rtp-verdict"></div>
-      </div>
-
-    </div>
-  </div>
-
   <!-- Leaderboard -->
   <div class="panel">
     <div class="section-title">🏆 TOP WINNERS</div>
@@ -843,18 +663,29 @@
 </div>
 
 <!-- ============================================================
-     WIN OVERLAY
+     WIN OVERLAY (With Action Area Flow)
 ============================================================ -->
 <div class="win-overlay" id="win-overlay">
   <div class="win-box">
     <h2 id="win-title">YOU WON!</h2>
     <div class="win-amount" id="win-amount-disp">+0 SATS</div>
-    <p data-i18n="win_p">Enter your name to claim a spot on the leaderboard!</p>
-    <input type="text" class="win-name-input" id="win-name" placeholder="YOUR NAME / NPUB" maxlength="24">
-    <button class="btn-win-submit" id="btn-win-submit" onclick="submitWin()">
-      <span data-i18n="engrave">⚡ ENGRAVE MY NAME</span>
-    </button>
-    <button class="btn-win-skip" onclick="closeWinOverlay()" data-i18n="skip">Skip</button>
+    
+    <div id="win-form-area">
+      <p data-i18n="win_p">Enter your name to claim a spot on the leaderboard!</p>
+      <input type="text" class="win-name-input" id="win-name" placeholder="YOUR NAME / NPUB" maxlength="24">
+      <button class="btn-win-submit" id="btn-win-submit" onclick="submitWin()">
+        <span data-i18n="engrave">⚡ ENGRAVE MY NAME</span>
+      </button>
+      <button class="btn-win-skip" onclick="closeWinOverlay()" data-i18n="skip">Skip</button>
+    </div>
+
+    <!-- The-Fiat-Burner風 プレイ終了後のシェア・継続アクション -->
+    <div id="win-action-area" style="display: none; margin-top: 15px;">
+      <div class="hype-quote" id="win-hype-quote" style="font-size: 11px; color: var(--pink); font-style: italic; margin-bottom: 12px; line-height: 1.4;"></div>
+      <button class="share-btn" style="display:block; margin-top:0; margin-bottom:10px;" onclick="shareToX()">🐦 <span data-i18n="share">SHARE TO X / TWITTER</span></button>
+      <button class="btn-win-submit" style="width:100%; margin-bottom:0;" onclick="closeWinOverlayAndSpin()">🎰 <span data-i18n="keep_spinning">KEEP SPINNING</span></button>
+    </div>
+
   </div>
 </div>
 
@@ -871,6 +702,33 @@ const GAS_URL        = "https://script.google.com/macros/s/AKfycbw2zH2M6fE9_iNc8
 const FREE_CREDITS   = 10000;
 
 /* ============================================================
+   HYPE QUOTES (射幸心煽りセリフ)
+============================================================ */
+const HYPE_QUOTES = {
+  en:[
+    "The next spin could be the JACKPOT. Don't stop now.",
+    "Winners never quit. Quitters never win.",
+    "You're just one spin away from Lambo.",
+    "Stacking sats has never been this thrilling!",
+    "The Lightning Network craves more action. Spin it!"
+  ],
+  ja:[
+    "次のスピンでジャックポットかもしれない。ここでやめるのか？",
+    "勝者は決して諦めない。諦める者に勝利はない。",
+    "ランボルギーニまであと1スピンの距離だ。",
+    "Satsを稼ぐのがこんなに興奮するとはな！",
+    "稲妻(Lightning)が次のベットを待っているぞ！"
+  ],
+  ko:[
+    "다음 스핀이 잭팟일지도 모른다. 여기서 멈출 텐가?",
+    "승자는 절대 포기하지 않는다. 포기하는 자에겐 승리가 없다.",
+    "람보르기니까지 단 한 스핀 남았다.",
+    "Sats를 쌓는 게 이렇게 짜릿할 줄이야!",
+    "번개(Lightning)가 너의 다음 베팅을 기다린다!"
+  ]
+};
+
+/* ============================================================
    i18n (EN / JA / KO)
 ============================================================ */
 const I18N = {
@@ -885,6 +743,8 @@ const I18N = {
     msg_win: "WIN!  +", msg_lose: "NO MATCH — SPIN AGAIN",
     msg_jackpot: "⚡ JACKPOT!  +", msg_refill: "FREE CREDITS USED UP — DEPOSIT TO CONTINUE",
     share: "SHARE TO X / TWITTER",
+    dep_more: "DEPOSIT MORE SATS",
+    keep_spinning: "KEEP SPINNING",
     stat_spins:"SPINS", stat_wins:"WINS", stat_best:"BIGGEST",
     howto_title: "📖 HOW TO PLAY",
     howto1_title:"FREE FIRST PLAY",
@@ -899,16 +759,7 @@ const I18N = {
     modal_title:"⚡ PAY TO DEPOSIT", tap_qr:"Tap QR to open wallet",
     modal_waiting:"⏳ Waiting for payment...", btn_cancel:"CANCEL",
     win_p:"Enter your name to claim a spot on the leaderboard!",
-    engrave:"⚡ ENGRAVE MY NAME", skip:"Skip",
-    dist_title: "📊 ODDS ANALYSIS",
-    dist_sym_sub: "SYMBOL DRAW PROBABILITY",
-    dist_outcome_sub: "WIN OUTCOME BREAKDOWN",
-    dist_col_combo: "COMBO", dist_col_mult: "MULT", dist_col_prob: "PROB", dist_col_contrib: "RTP CONTRIB",
-    dist_rtp_label: "RETURN TO PLAYER (RTP)",
-    dist_any_pair: "Any Pair (2 match)", dist_total_win: "TOTAL WIN RATE",
-    dist_house_edge: "HOUSE EDGE", dist_exp_per_spin: "EXP PER 100 BET",
-    dist_verdict_player: "⚠️ PLAYER HAS EDGE! House loses on average. Consider raising the house edge by reducing the ×1.5 pair payout or increasing symbol weights for rare symbols.",
-    dist_verdict_house: "✅ HOUSE WINS! Expected profit per spin is positive. Sustainable operation."
+    engrave:"⚡ ENGRAVE MY NAME", skip:"Skip"
   },
   ja: {
     subtitle: "SATSを賭けろ · SATSを勝ち取れ",
@@ -921,6 +772,8 @@ const I18N = {
     msg_win: "当たり！ +", msg_lose: "ハズレ — もう一回",
     msg_jackpot: "⚡ ジャックポット！ +", msg_refill: "無料クレジット終了 — 入金して続けよう",
     share: "X / Twitter でシェア",
+    dep_more: "さらにSATSを入金",
+    keep_spinning: "もっと回す",
     stat_spins:"回数", stat_wins:"当たり", stat_best:"最高",
     howto_title: "📖 遊び方",
     howto1_title:"初回無料プレイ",
@@ -935,16 +788,7 @@ const I18N = {
     modal_title:"⚡ 入金するには支払いを", tap_qr:"QRタップでウォレットを開く",
     modal_waiting:"⏳ 支払いを確認中...", btn_cancel:"キャンセル",
     win_p:"名前を入力してランキングに載せよう！",
-    engrave:"⚡ 名前を刻む", skip:"スキップ",
-    dist_title: "📊 確率分析",
-    dist_sym_sub: "シンボル出現確率",
-    dist_outcome_sub: "当選パターン別内訳",
-    dist_col_combo: "組合せ", dist_col_mult: "倍率", dist_col_prob: "確率", dist_col_contrib: "RTP貢献",
-    dist_rtp_label: "還元率（RTP）",
-    dist_any_pair: "任意2揃い", dist_total_win: "総当選率",
-    dist_house_edge: "ハウスエッジ", dist_exp_per_spin: "期待値(BET100当)",
-    dist_verdict_player: "⚠️ プレイヤー有利！胴元は平均的に損します。ペア配当(×1.5)を下げるか、レアシンボルの重みを増やすことでハウスエッジを改善できます。",
-    dist_verdict_house: "✅ 胴元が勝つ設定です！スピンごとの期待利益はプラス。持続可能な運営が可能です。"
+    engrave:"⚡ 名前を刻む", skip:"スキップ"
   },
   ko: {
     subtitle: "SATS를 걸어라 · SATS를 따라",
@@ -957,6 +801,8 @@ const I18N = {
     msg_win: "당첨! +", msg_lose: "꽝 — 다시 도전",
     msg_jackpot: "⚡ 잭팟! +", msg_refill: "무료 크레딧 소진 — 입금하고 계속",
     share: "X / Twitter에 공유",
+    dep_more: "SATS 추가 입금",
+    keep_spinning: "계속 돌리기",
     stat_spins:"스핀", stat_wins:"당첨", stat_best:"최고",
     howto_title: "📖 플레이 방법",
     howto1_title:"첫 무료 플레이",
@@ -971,16 +817,7 @@ const I18N = {
     modal_title:"⚡ 입금 결제", tap_qr:"QR 탭하여 지갑 열기",
     modal_waiting:"⏳ 결제 대기 중...", btn_cancel:"취소",
     win_p:"이름을 입력하고 리더보드에 올라라!",
-    engrave:"⚡ 내 이름 새기기", skip:"건너뛰기",
-    dist_title: "📊 확률 분석",
-    dist_sym_sub: "심볼 출현 확률",
-    dist_outcome_sub: "당첨 패턴별 내역",
-    dist_col_combo: "조합", dist_col_mult: "배율", dist_col_prob: "확률", dist_col_contrib: "RTP 기여",
-    dist_rtp_label: "환수율 (RTP)",
-    dist_any_pair: "임의 2개 일치", dist_total_win: "총 당첨 확률",
-    dist_house_edge: "하우스 엣지", dist_exp_per_spin: "기대값(베팅100당)",
-    dist_verdict_player: "⚠️ 플레이어 유리! 하우스는 평균적으로 손실. 페어 배당(×1.5)을 낮추거나 희귀 심볼 가중치를 높여 하우스 엣지를 개선하세요.",
-    dist_verdict_house: "✅ 하우스가 이기는 설정! 스핀당 기대 수익이 플러스. 지속 가능한 운영이 가능합니다."
+    engrave:"⚡ 내 이름 새기기", skip:"건너뛰기"
   }
 };
 
@@ -989,20 +826,17 @@ function setLang(l) {
   lang = l;
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (I18N[l] && I18N[l][key] !== undefined) el.textContent = I18N[l][key];
+    if (I18N[l] && I18N[l][key] !== undefined) el.innerHTML = I18N[l][key];
   });
-  renderDistributionChart(); // re-render labels
 }
 
 /* ============================================================
-   SYMBOLS & WEIGHTS  (レア→高倍率、高頻度→低倍率)
+   SYMBOLS & WEIGHTS
 ============================================================ */
-const SYMBOLS   = ['⚡','₿','🔑','💎','🌕','🔥'];
-const WEIGHTS   = [2,   5,   8,  10,  15,  20];
+const SYMBOLS   =['⚡','₿','🔑','💎','🌕','🔥'];
+const WEIGHTS   =[2,   5,   8,  10,  15,  20];
 const MULTS     = { '⚡⚡⚡':50, '₿₿₿':20, '🔑🔑🔑':10, '💎💎💎':8, '🌕🌕🌕':5, '🔥🔥🔥':3 };
-
-// MAX 10,000 sats
-const BET_LEVELS = [10, 50, 100, 250, 500, 1000, 2500, 5000, 10000];
+const BET_LEVELS =[10, 50, 100, 250, 500, 1000, 2500, 5000, 10000];
 
 /* ============================================================
    STATE
@@ -1032,9 +866,6 @@ window.onload = () => {
   spawnSparkles();
 };
 
-/* ============================================================
-   SPARKLES (ambient floating ✨)
-============================================================ */
 function spawnSparkles() {
   const icons = ['✨','💖','⚡','💎','🌟','💫'];
   for (let i = 0; i < 8; i++) {
@@ -1063,7 +894,7 @@ function weightedRand() {
 function buildReel(id, landSym) {
   const inner = document.getElementById('inner' + id);
   inner.innerHTML = '';
-  const strip = [];
+  const strip =[];
   for (let i=0; i<16; i++) strip.push(SYMBOLS[Math.floor(Math.random()*SYMBOLS.length)]);
   strip.push(landSym);
   strip.forEach(s => {
@@ -1079,9 +910,6 @@ function buildAllReels() {
   for (let i=0; i<3; i++) buildReel(i, finalSyms[i]);
 }
 
-/* ============================================================
-   BET CONTROLS
-============================================================ */
 function changeBet(dir) {
   if (isSpinning) return;
   betIdx = Math.max(0, Math.min(BET_LEVELS.length-1, betIdx+dir));
@@ -1093,9 +921,6 @@ function setMaxBet() {
   document.getElementById('bet-display').textContent = BET_LEVELS[betIdx].toLocaleString();
 }
 
-/* ============================================================
-   UI UPDATES
-============================================================ */
 function updateUI() {
   document.getElementById('balance-display').innerHTML = balance.toLocaleString() + ' <sup>SATS</sup>';
   document.getElementById('won-display').innerHTML     = sessionWon.toLocaleString() + ' <sup>SATS</sup>';
@@ -1116,19 +941,20 @@ function setMsg(text, cls) {
 async function spin() {
   const bet = BET_LEVELS[betIdx];
   if (balance < bet) {
-    showDepositSection();
+    showDepositSectionAndScroll();
     setMsg(I18N[lang].msg_refill, 'lose');
     return;
   }
   if (isSpinning) return;
 
   isSpinning = true;
+  pendingWin = 0; // スピン開始時にリセット
   document.getElementById('spin-btn').disabled = true;
-  document.getElementById('share-btn').style.display = 'none';
+  document.getElementById('post-action-area').style.display = 'none'; // アクションエリアを隠す
   setMsg(I18N[lang].msg_spinning, '');
 
   balance -= bet;
-  finalSyms = [weightedRand(), weightedRand(), weightedRand()];
+  finalSyms =[weightedRand(), weightedRand(), weightedRand()];
   for (let i=0; i<3; i++) buildReel(i, finalSyms[i]);
   updateUI();
 
@@ -1189,29 +1015,37 @@ function resolveResult(bet) {
       document.getElementById('win-amount-disp').textContent = '+' + winAmt.toLocaleString() + ' SATS';
       document.getElementById('win-overlay').classList.add('open');
     }
-
-    document.getElementById('share-btn').style.display = 'block';
   } else {
     setMsg(I18N[lang].msg_lose, 'lose');
   }
 
   if (balance <= 0) {
     freeUsed = true;
-    showDepositSection();
+    showDepositSectionAndScroll();
     setMsg(I18N[lang].msg_refill, 'lose');
   }
 
   updateUI();
   isSpinning = false;
   document.getElementById('spin-btn').disabled = false;
+
+  // プレイ終了後のアクションエリア表示 (射幸心を煽るセリフをランダム設定)
+  const quotes = HYPE_QUOTES[lang];
+  document.getElementById('main-hype-quote').textContent = '"' + quotes[Math.floor(Math.random() * quotes.length)] + '"';
+  document.getElementById('post-action-area').style.display = 'flex';
 }
 
 /* ============================================================
    DEPOSIT FLOW
 ============================================================ */
 function showDepositSection() {
-  document.getElementById('free-banner').style.display    = 'none';
+  document.getElementById('free-banner').style.display = 'none';
   document.getElementById('deposit-section').classList.add('visible');
+}
+
+function showDepositSectionAndScroll() {
+  showDepositSection();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function openDeposit(amount) {
@@ -1271,7 +1105,7 @@ function closeModal() {
 }
 
 /* ============================================================
-   WIN OVERLAY
+   WIN OVERLAY (Submit & Actions)
 ============================================================ */
 function submitWin() {
   let name = document.getElementById('win-name').value.trim() || 'Anon Pleb';
@@ -1280,16 +1114,33 @@ function submitWin() {
 
   const url = `${GAS_URL}?action=record&name=${encodeURIComponent(name)}&sats=${pendingWin}&fiat=0`;
   fetch(url)
-    .then(() => { fetchLeaderboard(); closeWinOverlay(); })
-    .catch(() => closeWinOverlay());
+    .then(() => { fetchLeaderboard(); showWinActions(); })
+    .catch(() => showWinActions());
+}
+
+function showWinActions() {
+  document.getElementById('win-form-area').style.display = 'none';
+  document.getElementById('win-action-area').style.display = 'block';
+  
+  // 射幸心セリフをセット
+  const quotes = HYPE_QUOTES[lang];
+  document.getElementById('win-hype-quote').textContent = '"' + quotes[Math.floor(Math.random() * quotes.length)] + '"';
+}
+
+function closeWinOverlayAndSpin() {
+  closeWinOverlay();
+  // Optionally auto-spin here or let user press SPIN again.
 }
 
 function closeWinOverlay() {
   document.getElementById('win-overlay').classList.remove('open');
+  // 状態をリセット
   document.getElementById('win-name').value = '';
   const btn = document.getElementById('btn-win-submit');
   btn.textContent = I18N[lang].engrave;
   btn.disabled = false;
+  document.getElementById('win-form-area').style.display = 'block';
+  document.getElementById('win-action-area').style.display = 'none';
 }
 
 /* ============================================================
@@ -1298,7 +1149,7 @@ function closeWinOverlay() {
 function fetchLeaderboard() {
   fetch(`${GAS_URL}?action=getStats`)
   .then(r => r.json())
-  .then(data => renderLeaderboard(data.leaderboard || []))
+  .then(data => renderLeaderboard(data.leaderboard ||[]))
   .catch(() => renderLeaderboard([]));
 }
 
@@ -1326,22 +1177,31 @@ function escHtml(s) {
 function shareToX() {
   const sym   = finalSyms.join(' ');
   const combo = finalSyms.join('');
-  const mult  = MULTS[combo] || 1.5;
+  const mult  = MULTS[combo] || (pendingWin > 0 ? 1.5 : 0);
 
-  const textEN = `I just won ${lastWin.toLocaleString()} SATS on ⚡ Lightning Slot! 🎰\n[ ${sym} ] — ×${mult}\nStack sats, have fun. First 10,000 sats are FREE 👇\n#Bitcoin #LightningNetwork #StackSats`;
-  const textJA = `⚡ Lightning Slotで ${lastWin.toLocaleString()} SATS 獲得！🎰\n[ ${sym} ] ×${mult}\n初回10,000 SATS無料！ 👇\n#Bitcoin #ライトニングネットワーク`;
-  const textKO = `⚡ Lightning Slot에서 ${lastWin.toLocaleString()} SATS 획득! 🎰\n[ ${sym} ] ×${mult}\n첫 10,000 SATS 무료! 👇\n#Bitcoin #라이트닝네트워크`;
+  let text = "";
+  if (pendingWin > 0) {
+    const textEN = `I just won ${lastWin.toLocaleString()} SATS on ⚡ Lightning Slot! 🎰\n[ ${sym} ] — ×${mult}\nStack sats, have fun. First 10,000 sats are FREE 👇\n#Bitcoin #LightningNetwork #StackSats`;
+    const textJA = `⚡ Lightning Slotで ${lastWin.toLocaleString()} SATS 獲得！🎰\n[ ${sym} ] ×${mult}\n初回10,000 SATS無料！ 👇\n#Bitcoin #ライトニングネットワーク`;
+    const textKO = `⚡ Lightning Slot에서 ${lastWin.toLocaleString()} SATS 획득! 🎰\n[ ${sym} ] ×${mult}\n첫 10,000 SATS 무료! 👇\n#Bitcoin #라이트닝네트워크`;
+    text = lang === 'ja' ? textJA : lang === 'ko' ? textKO : textEN;
+  } else {
+    // 負けた場合や通常スピン時のシェアテキスト
+    const textEN = `I'm spinning ⚡ Lightning Slot! 🎰\n[ ${sym} ]\nThe next spin could be the jackpot. First 10,000 sats are FREE 👇\n#Bitcoin #LightningNetwork`;
+    const textJA = `⚡ Lightning Slotを回しているぞ！🎰\n[ ${sym} ]\n次のスピンがジャックポットかもしれない。初回10,000 SATS無料！ 👇\n#Bitcoin #ライトニングネットワーク`;
+    const textKO = `⚡ Lightning Slot 돌리는 중! 🎰\n[ ${sym} ]\n다음 스핀이 잭팟일지도 모른다. 첫 10,000 SATS 무료! 👇\n#Bitcoin #라이트닝네트워크`;
+    text = lang === 'ja' ? textJA : lang === 'ko' ? textKO : textEN;
+  }
 
-  const text = lang === 'ja' ? textJA : lang === 'ko' ? textKO : textEN;
-  const url  = encodeURIComponent("https://YOUR_GITHUB_PAGES_URL/");
+  const url  = encodeURIComponent("https://ck121212195.github.io/Lightning-Slot/"); // ご自身のURLに合わせてください
   window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${url}`, '_blank');
 }
 
 /* ============================================================
-   CONFETTI (upgraded)
+   CONFETTI
 ============================================================ */
 function spawnConfetti() {
-  const colors = ['#F7A800','#FF6EB4','#C084FC','#2EFF8A','#00E5FF','#FFD700'];
+  const colors =['#F7A800','#FF6EB4','#C084FC','#2EFF8A','#00E5FF','#FFD700'];
   for (let i=0; i<36; i++) {
     const el = document.createElement('div');
     el.className = 'confetti-piece';
@@ -1355,131 +1215,6 @@ function spawnConfetti() {
   }
 }
 
-/* ============================================================
-   DISTRIBUTION / ODDS ANALYSIS CHART
-============================================================ */
-function renderDistributionChart() {
-  const t = I18N[lang];
-  const totalW = WEIGHTS.reduce((a,b)=>a+b,0);
-  const total3 = Math.pow(totalW, 3);
-
-  // ── Symbol probability bars ──────────────────────────────
-  const barColors = [
-    'linear-gradient(90deg,#F7A800,#FF6200)',  // ⚡
-    'linear-gradient(90deg,#F7A800,#FFD700)',  // ₿
-    'linear-gradient(90deg,#C084FC,#7C3AED)',  // 🔑
-    'linear-gradient(90deg,#00E5FF,#4B9EFF)',  // 💎
-    'linear-gradient(90deg,#FF6EB4,#FF6200)',  // 🌕
-    'linear-gradient(90deg,#FF4565,#FF6EB4)',  // 🔥
-  ];
-  const maxW = Math.max(...WEIGHTS);
-  document.getElementById('sym-bars').innerHTML = SYMBOLS.map((sym, i) => {
-    const pct = (WEIGHTS[i] / totalW * 100).toFixed(1);
-    const barW = (WEIGHTS[i] / maxW * 100).toFixed(1);
-    return `
-      <div class="sym-bar-row">
-        <div class="sym-icon">${sym}</div>
-        <div class="sym-bar-track">
-          <div class="sym-bar-fill" style="width:${barW}%;background:${barColors[i]}"></div>
-        </div>
-        <div class="sym-bar-pct">${pct}%</div>
-      </div>`;
-  }).join('');
-
-  // ── Outcome breakdown ─────────────────────────────────────
-  // Compute P(triple) for each symbol and its RTP contribution
-  let totalTripleRTP = 0;
-  let totalTripleProb = 0;
-  const rows = [];
-
-  SYMBOLS.forEach((sym, i) => {
-    const key = sym+sym+sym;
-    const mult = MULTS[key];
-    if (!mult) return;
-    const prob = Math.pow(WEIGHTS[i], 3) / total3;
-    const contrib = prob * mult;
-    totalTripleRTP += contrib;
-    totalTripleProb += prob;
-    rows.push({ sym: key, mult, prob, contrib });
-  });
-
-  // Compute P(at least one pair) using inclusion-exclusion
-  // P(A∪B∪C) = 3*P(s0==s1) - 2*P(all same) where P(s0==s1)=S2/S1^2
-  const S2 = WEIGHTS.reduce((a,w)=>a+w*w, 0);
-  const S3 = WEIGHTS.reduce((a,w)=>a+w*w*w, 0);
-  const pAnyPair_incl3 = (3*S2 - 2*S3/totalW) / (totalW*totalW);
-  const pAnyTriple = S3 / total3;
-  const pPairOnly = Math.max(0, pAnyPair_incl3 - pAnyTriple);
-  const pairContrib = pPairOnly * 1.5;
-  const totalRTP = totalTripleRTP + pairContrib;
-  const houseEdge = 1 - totalRTP; // negative = player-favorable
-
-  // Render table rows
-  const tbody = document.getElementById('odds-tbody');
-  tbody.innerHTML = rows.map(r => `
-    <tr>
-      <td class="sym-cell odds-table-sym">${r.sym}</td>
-      <td class="mult-cell">×${r.mult}</td>
-      <td class="prob-cell">${(r.prob*100).toFixed(4)}%</td>
-      <td class="contrib-cell">${(r.contrib*100).toFixed(3)}%</td>
-    </tr>`).join('') +
-    `<tr>
-      <td style="font-size:10px;color:var(--muted)">${t.dist_any_pair}</td>
-      <td class="mult-cell">×1.5</td>
-      <td class="prob-cell">${(pPairOnly*100).toFixed(2)}%</td>
-      <td class="contrib-cell">${(pairContrib*100).toFixed(2)}%</td>
-    </tr>`;
-
-  // ── Win summary grid ──────────────────────────────────────
-  const totalWinProb = (pAnyPair_incl3 * 100).toFixed(1);
-  const rtpPct = (totalRTP * 100).toFixed(2);
-  const hePct = (Math.abs(houseEdge) * 100).toFixed(2);
-  const expPer100 = (totalRTP * 100 - 100).toFixed(2);
-
-  document.getElementById('win-prob-grid').innerHTML = `
-    <div class="win-prob-cell">
-      <div class="wp-label">${t.dist_total_win}</div>
-      <div class="wp-val ${totalWinProb > 40 ? 'good' : 'warn'}">${totalWinProb}%</div>
-    </div>
-    <div class="win-prob-cell">
-      <div class="wp-label">RTP</div>
-      <div class="wp-val ${totalRTP > 1 ? 'good' : 'pink'}">${rtpPct}%</div>
-    </div>
-    <div class="win-prob-cell">
-      <div class="wp-label">${t.dist_house_edge}</div>
-      <div class="wp-val ${houseEdge < 0 ? 'good' : 'warn'}">${houseEdge < 0 ? '−' : '+'}${hePct}%</div>
-    </div>
-    <div class="win-prob-cell">
-      <div class="wp-label">${t.dist_exp_per_spin}</div>
-      <div class="wp-val ${expPer100 >= 0 ? 'cyan' : 'pink'}">${expPer100 >= 0 ? '+' : ''}${expPer100}</div>
-    </div>`;
-
-  // ── RTP meter ─────────────────────────────────────────────
-  // Scale: 0% → 0px, 150% RTP → 100% bar width; 100% at 66.67%
-  const meterPct = Math.min(100, totalRTP / 1.5 * 100);
-  const fill = document.getElementById('rtp-meter-fill');
-  // Color: green if player-edge, pink/gold gradient if house-edge
-  fill.style.background = houseEdge < 0
-    ? 'linear-gradient(90deg,#2EFF8A,#00E5FF)'
-    : 'linear-gradient(90deg,var(--gold),var(--pink))';
-  fill.style.boxShadow = houseEdge < 0
-    ? '0 0 12px rgba(46,255,138,.5)'
-    : '0 0 12px rgba(247,168,0,.5)';
-  setTimeout(() => { fill.style.width = meterPct + '%'; }, 100);
-
-  const rtpEl = document.getElementById('rtp-value');
-  rtpEl.textContent = rtpPct + '%';
-  rtpEl.style.background = houseEdge < 0
-    ? 'linear-gradient(90deg,#2EFF8A,#00E5FF)'
-    : 'linear-gradient(90deg,var(--gold),var(--pink))';
-  rtpEl.style.webkitBackgroundClip = 'text';
-  rtpEl.style.webkitTextFillColor  = 'transparent';
-  rtpEl.style.filter = 'drop-shadow(0 0 10px rgba(46,255,138,.4))';
-
-  const verdictEl = document.getElementById('rtp-verdict');
-  verdictEl.className = 'rtp-verdict ' + (houseEdge < 0 ? 'player-edge' : 'house-edge');
-  verdictEl.textContent = houseEdge < 0 ? t.dist_verdict_player : t.dist_verdict_house;
-}
 </script>
 </body>
 </html>
