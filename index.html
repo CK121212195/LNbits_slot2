@@ -304,7 +304,7 @@
     .spin-btn:disabled { background: #1C1828; color: #3A3060; cursor: not-allowed; box-shadow: none; }
 
     /* ============================================================
-       RESULT MESSAGE & ACTION AREA (THE-FIAT-BURNER FLOW)
+       RESULT MESSAGE & ACTION AREA
     ============================================================ */
     .result-msg {
       text-align: center; margin-top: 10px;
@@ -369,7 +369,7 @@
     .btn-modal-close:hover { border-color: var(--border-hi); color: var(--text); }
 
     /* ============================================================
-       WIN OVERLAY (THE-FIAT-BURNER FLOW)
+       WIN OVERLAY
     ============================================================ */
     .win-overlay {
       display: none; position: fixed; inset: 0;
@@ -556,7 +556,6 @@
     </button>
     <div class="result-msg" id="result-msg" data-i18n="msg_ready">— READY TO SPIN —</div>
     
-    <!-- スピン完了後のアクションエリア (The-Fiat-Burner Flow) -->
     <div id="post-action-area" style="display: none; flex-direction: column; gap: 10px; margin-top: 10px;">
       <div class="hype-quote" id="main-hype-quote" style="text-align: center; font-size: 11px; color: var(--pink); font-style: italic; margin-bottom: 5px; line-height: 1.4;"></div>
       <button class="share-btn" style="display:block; margin-top:0;" onclick="shareToX()">🐦 <span data-i18n="share">SHARE TO X / TWITTER</span></button>
@@ -637,7 +636,7 @@
     </div>
   </div>
 
-</div><!-- /main -->
+</div>
 
 <!-- ============================================================
      FOOTER
@@ -658,12 +657,15 @@
     <div style="font-size:9px;color:var(--muted);margin-bottom:8px" data-i18n="tap_qr">Tap QR to open wallet</div>
     <textarea class="modal-inv" id="modal-inv-text" readonly onclick="this.select()"></textarea>
     <div class="modal-waiting" data-i18n="modal_waiting">⏳ Waiting for payment...</div>
+    
+    <!-- 追加: Fiat Burner にあった手動確認ボタン -->
+    <button class="btn-win-submit" style="width:100%; margin-bottom:10px; font-size:11px;" onclick="verifyPayment()">VERIFY PAYMENT</button>
     <button class="btn-modal-close" onclick="closeModal()" data-i18n="btn_cancel">CANCEL</button>
   </div>
 </div>
 
 <!-- ============================================================
-     WIN OVERLAY (With Action Area Flow)
+     WIN OVERLAY
 ============================================================ -->
 <div class="win-overlay" id="win-overlay">
   <div class="win-box">
@@ -679,7 +681,6 @@
       <button class="btn-win-skip" onclick="closeWinOverlay()" data-i18n="skip">Skip</button>
     </div>
 
-    <!-- The-Fiat-Burner風 プレイ終了後のシェア・継続アクション -->
     <div id="win-action-area" style="display: none; margin-top: 15px;">
       <div class="hype-quote" id="win-hype-quote" style="font-size: 11px; color: var(--pink); font-style: italic; margin-bottom: 12px; line-height: 1.4;"></div>
       <button class="share-btn" style="display:block; margin-top:0; margin-bottom:10px;" onclick="shareToX()">🐦 <span data-i18n="share">SHARE TO X / TWITTER</span></button>
@@ -859,7 +860,7 @@ let pendingWin = 0;
 let lastWin    = 0;
 let pollTimer  = null;
 let curHash    = "";
-let freeUsed   = false;
+let pendingDepositAmount = 0; // 追加: 入金待機中の金額
 
 /* ============================================================
    INIT
@@ -869,9 +870,8 @@ window.onload = () => {
   updateUI();
   fetchLeaderboard();
   
-  // 🔥 ここでブラウザの言語を自動判定してセットします
   const userLang = (navigator.language || navigator.userLanguage).substring(0, 2);
-  const defaultLang = ['ja', 'ko'].includes(userLang) ? userLang : 'en';
+  const defaultLang =['ja', 'ko'].includes(userLang) ? userLang : 'en';
   document.querySelector('.lang-select').value = defaultLang;
   setLang(defaultLang);
   
@@ -893,9 +893,6 @@ function spawnSparkles() {
   }
 }
 
-/* ============================================================
-   REEL HELPERS
-============================================================ */
 function weightedRand() {
   const total = WEIGHTS.reduce((a,b)=>a+b, 0);
   let r = Math.random() * total;
@@ -947,9 +944,6 @@ function setMsg(text, cls) {
   el.className   = 'result-msg' + (cls ? ' '+cls : '');
 }
 
-/* ============================================================
-   SPIN
-============================================================ */
 async function spin() {
   const bet = BET_LEVELS[betIdx];
   if (balance < bet) {
@@ -960,9 +954,9 @@ async function spin() {
   if (isSpinning) return;
 
   isSpinning = true;
-  pendingWin = 0; // スピン開始時にリセット
+  pendingWin = 0; 
   document.getElementById('spin-btn').disabled = true;
-  document.getElementById('post-action-area').style.display = 'none'; // アクションエリアを隠す
+  document.getElementById('post-action-area').style.display = 'none'; 
   setMsg(I18N[lang].msg_spinning, '');
 
   balance -= bet;
@@ -972,7 +966,7 @@ async function spin() {
 
   await new Promise(r => setTimeout(r, 60));
 
-  const delays = [800, 1150, 1520];
+  const delays =[800, 1150, 1520];
   for (let i=0; i<3; i++) {
     const inner = document.getElementById('inner'+i);
     const count = inner.children.length;
@@ -1032,7 +1026,6 @@ function resolveResult(bet) {
   }
 
   if (balance <= 0) {
-    freeUsed = true;
     showDepositSectionAndScroll();
     setMsg(I18N[lang].msg_refill, 'lose');
   }
@@ -1041,14 +1034,13 @@ function resolveResult(bet) {
   isSpinning = false;
   document.getElementById('spin-btn').disabled = false;
 
-  // プレイ終了後のアクションエリア表示 (射幸心を煽るセリフをランダム設定)
   const quotes = HYPE_QUOTES[lang];
   document.getElementById('main-hype-quote').textContent = '"' + quotes[Math.floor(Math.random() * quotes.length)] + '"';
   document.getElementById('post-action-area').style.display = 'flex';
 }
 
 /* ============================================================
-   DEPOSIT FLOW
+   DEPOSIT FLOW (The Fiat Burner Style)
 ============================================================ */
 function showDepositSection() {
   document.getElementById('free-banner').style.display = 'none';
@@ -1062,54 +1054,74 @@ function showDepositSectionAndScroll() {
 
 function openDeposit(amount) {
   if (isSpinning) return;
+  pendingDepositAmount = amount; // 保存
   document.getElementById('modal-invoice').classList.add('open');
   document.getElementById('qr-img').src  = '';
   document.getElementById('modal-inv-text').value = 'Generating invoice...';
 
+  // 🔥 Fiat Burner と全く同じ通信とエラーハンドリングに修正！
   fetch(LNBITS_URL, {
     method: 'POST',
     headers: { 'X-Api-Key': LNBITS_API_KEY, 'Content-Type': 'application/json' },
     body: JSON.stringify({ out: false, amount: amount, memo: `⚡ Lightning Slot — ${amount} sats deposit` })
   })
-  .then(r => r.json())
+  .then(res => {
+    if (!res.ok) throw new Error("Network response was not ok");
+    return res.json();
+  })
   .then(data => {
     curHash = data.payment_hash;
     const inv = data.payment_request;
-    document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=lightning:${inv}`;
-    document.getElementById('ln-link').href = `lightning:${inv}`;
+    const lnUrl = `lightning:${inv}`;
+    
+    document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${lnUrl}`;
+    document.getElementById('ln-link').href = lnUrl;
     document.getElementById('modal-inv-text').value = inv;
     
-    // 🔥 ここをThe-Fiat-Burnerと同じに修正（PC・スマホ問わず無条件でWallet呼び出し）
-    setTimeout(() => { window.location.href = `lightning:${inv}`; }, 800);
+    // Fiat Burnerと全く同じく強制的にWallet呼び出し
+    setTimeout(() => { window.location.href = lnUrl; }, 800);
     
-    startPolling(amount);
+    startPolling();
   })
-  .catch(() => {
-    document.getElementById('modal-inv-text').value = 'LNbits connection failed (demo mode)';
-    setTimeout(() => {
-      closeModal();
-      balance += amount;
-      updateUI();
-      setMsg(`+${amount.toLocaleString()} SATS DEPOSITED (demo)`, 'win');
-    }, 2000);
+  .catch(err => {
+    // ⚠️ もしサーバーエラーなら、ここでデモ処理に逃げずにしっかりエラーを出す
+    alert("Invoice generation failed. API server might be down.");
+    location.reload();
   });
 }
 
-function startPolling(amount) {
+function startPolling() {
   if (pollTimer) clearInterval(pollTimer);
   pollTimer = setInterval(() => {
-    fetch(`${LNBITS_URL}/${curHash}`, { headers: { 'X-Api-Key': LNBITS_API_KEY } })
+    fetch(`${LNBITS_URL}/${curHash}`, { method: "GET", headers: { 'X-Api-Key': LNBITS_API_KEY } })
     .then(r => r.json())
     .then(data => {
       if (data.paid) {
         clearInterval(pollTimer);
         closeModal();
-        balance += amount;
+        balance += pendingDepositAmount;
         updateUI();
-        setMsg(`+${amount.toLocaleString()} SATS DEPOSITED! ⚡`, 'win');
+        setMsg(`+${pendingDepositAmount.toLocaleString()} SATS DEPOSITED! ⚡`, 'win');
       }
     }).catch(console.error);
   }, 3000);
+}
+
+function verifyPayment() {
+  if (!curHash) return;
+  fetch(`${LNBITS_URL}/${curHash}`, { method: "GET", headers: { "X-Api-Key": LNBITS_API_KEY } })
+  .then(res => res.json())
+  .then(data => {
+    if (data.paid) {
+      if (pollTimer) clearInterval(pollTimer);
+      closeModal();
+      balance += pendingDepositAmount;
+      updateUI();
+      setMsg(`+${pendingDepositAmount.toLocaleString()} SATS DEPOSITED! ⚡`, 'win');
+    } else {
+      alert("Payment not received yet. Keep waiting!");
+    }
+  }).catch(console.error);
 }
 
 function closeModal() {
@@ -1117,9 +1129,6 @@ function closeModal() {
   document.getElementById('modal-invoice').classList.remove('open');
 }
 
-/* ============================================================
-   WIN OVERLAY (Submit & Actions)
-============================================================ */
 function submitWin() {
   let name = document.getElementById('win-name').value.trim() || 'Anon Pleb';
   const btn = document.getElementById('btn-win-submit');
@@ -1134,20 +1143,16 @@ function submitWin() {
 function showWinActions() {
   document.getElementById('win-form-area').style.display = 'none';
   document.getElementById('win-action-area').style.display = 'block';
-  
-  // 射幸心セリフをセット
   const quotes = HYPE_QUOTES[lang];
   document.getElementById('win-hype-quote').textContent = '"' + quotes[Math.floor(Math.random() * quotes.length)] + '"';
 }
 
 function closeWinOverlayAndSpin() {
   closeWinOverlay();
-  // Optionally auto-spin here or let user press SPIN again.
 }
 
 function closeWinOverlay() {
   document.getElementById('win-overlay').classList.remove('open');
-  // 状態をリセット
   document.getElementById('win-name').value = '';
   const btn = document.getElementById('btn-win-submit');
   btn.textContent = I18N[lang].engrave;
@@ -1156,9 +1161,6 @@ function closeWinOverlay() {
   document.getElementById('win-action-area').style.display = 'none';
 }
 
-/* ============================================================
-   LEADERBOARD
-============================================================ */
 function fetchLeaderboard() {
   fetch(`${GAS_URL}?action=getStats`)
   .then(r => r.json())
@@ -1184,15 +1186,10 @@ function escHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
-/* ============================================================
-   SHARE TO X / TWITTER
-============================================================ */
 function shareToX() {
   const sym   = finalSyms.join(' ');
   const combo = finalSyms.join('');
   const mult  = MULTS[combo] || (pendingWin > 0 ? 1.5 : 0);
-  
-  // 🔥 選ばれた言語の射幸心セリフをシェア文に追加
   const hype  = HYPE_QUOTES[lang][Math.floor(Math.random() * HYPE_QUOTES[lang].length)];
 
   let text = "";
@@ -1214,13 +1211,10 @@ function shareToX() {
     }
   }
 
-  const url  = encodeURIComponent("https://ck121212195.github.io/Lightning-Slot/"); // ご自身のURLに合わせてください
+  const url  = encodeURIComponent("https://ck121212195.github.io/Lightning-Slot/"); 
   window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${url}`, '_blank');
 }
 
-/* ============================================================
-   CONFETTI
-============================================================ */
 function spawnConfetti() {
   const colors =['#F7A800','#FF6EB4','#C084FC','#2EFF8A','#00E5FF','#FFD700'];
   for (let i=0; i<36; i++) {
