@@ -6,15 +6,15 @@
   <title>⚡ LIGHTNING SLOT ⚡</title>
 
   <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://YOUR_GITHUB_PAGES_URL/">
+  <meta property="og:url"         content="https://ck121212195.github.io/Lightning-Slot/">
   <meta property="og:site_name"   content="⚡ LIGHTNING SLOT">
   <meta property="og:title"       content="⚡ LIGHTNING SLOT — Bet Sats. Win Sats.">
   <meta property="og:description" content="ビットコインで遊ぶスロットマシン。初回10,000 SATS無料プレイ！Lightning Networkで勝ったSatsをゲット。 #Bitcoin">
-  <meta property="og:image"       content="https://YOUR_GITHUB_PAGES_URL/og-image.png">
+  <meta property="og:image"       content="https://ck121212195.github.io/Lightning-Slot/og-image.png">
   <meta name="twitter:card"       content="summary_large_image">
   <meta name="twitter:title"      content="⚡ LIGHTNING SLOT — Bet Sats. Win Sats.">
   <meta name="twitter:description" content="初回10,000 SATS無料！スロットを回してSatsを稼げ。 #Bitcoin #LightningNetwork">
-  <meta name="twitter:image"      content="https://YOUR_GITHUB_PAGES_URL/og-image.png">
+  <meta name="twitter:image"      content="https://ck121212195.github.io/Lightning-Slot/og-image.png">
 
   <link rel="icon"             type="image/png" href="favicon.png" sizes="32x32">
   <link rel="apple-touch-icon" sizes="180x180"  href="favicon.png">
@@ -710,21 +710,27 @@ const HYPE_QUOTES = {
     "Winners never quit. Quitters never win.",
     "You're just one spin away from Lambo.",
     "Stacking sats has never been this thrilling!",
-    "The Lightning Network craves more action. Spin it!"
+    "The Lightning Network craves more action. Spin it!",
+    "Are you a whale or a pleb? Prove it.",
+    "Fortune favors the bold."
   ],
   ja:[
     "次のスピンでジャックポットかもしれない。ここでやめるのか？",
     "勝者は決して諦めない。諦める者に勝利はない。",
     "ランボルギーニまであと1スピンの距離だ。",
     "Satsを稼ぐのがこんなに興奮するとはな！",
-    "稲妻(Lightning)が次のベットを待っているぞ！"
+    "稲妻(Lightning)が次のベットを待っているぞ！",
+    "お前はクジラか、それとも名もなきプレブか？証明してみせろ。",
+    "幸運は勇者に味方する。全ツッパだ。"
   ],
   ko:[
     "다음 스핀이 잭팟일지도 모른다. 여기서 멈출 텐가?",
     "승자는 절대 포기하지 않는다. 포기하는 자에겐 승리가 없다.",
     "람보르기니까지 단 한 스핀 남았다.",
     "Sats를 쌓는 게 이렇게 짜릿할 줄이야!",
-    "번개(Lightning)가 너의 다음 베팅을 기다린다!"
+    "번개(Lightning)가 너의 다음 베팅을 기다린다!",
+    "너는 고래인가, 아니면 평범한 플레브인가? 증명해봐라.",
+    "행운은 용기 있는 자의 편이다."
   ]
 };
 
@@ -781,7 +787,7 @@ const I18N = {
     howto2_title:"賭けてスピン",
     howto2_desc: "賭け金を選んでスピン(10〜10,000 sats)。3つ揃えば勝ち。2つ揃いでも×1.5の配当。",
     howto3_title:"入金して続ける",
-    howto3_desc: "無料クレジット終了後は1,000/5,000/10,000 SATSを入金。モバイルではウォレットが自動起動。",
+    howto3_desc: "無料クレジット終了後は1,000/5,000/10,000 SATSを入金。ウォレットが自動起動します。",
     howto4_title:"ランキングに刻め",
     howto4_desc: "大きな勝利でランキングに載れる。⚡⚡⚡ ジャックポット（×50）で永遠に名を残せ！",
     paytable_title:"— 配当表 —", any2:"任意の2つ揃い", any2note:"ペア",
@@ -810,7 +816,7 @@ const I18N = {
     howto2_title:"베팅 & 스핀",
     howto2_desc: "베팅금액(10~10,000 sats)을 정하고 스핀. 3개 맞추면 당첨. 2개만 맞춰도 ×1.5 지급!",
     howto3_title:"계속하려면 입금",
-    howto3_desc: "무료 크레딧 소진 후 1,000/5,000/10,000 SATS 라이트닝으로 입금. 모바일에선 지갑이 자동 실행.",
+    howto3_desc: "무료 크레딧 소진 후 1,000/5,000/10,000 SATS 라이트닝으로 입금. 지갑이 자동 실행됩니다.",
     howto4_title:"리더보드에 올라라",
     howto4_desc: "큰 당첨으로 리더보드에 등재. ⚡⚡⚡ 잭팟(×50)으로 영원히 이름을 새겨라!",
     paytable_title:"— 배당표 —", any2:"임의 2개 일치", any2note:"페어",
@@ -848,7 +854,7 @@ let wins       = 0;
 let biggestWin = 0;
 let betIdx     = 0;
 let isSpinning = false;
-let finalSyms  = ['₿','₿','₿'];
+let finalSyms  =['₿','₿','₿'];
 let pendingWin = 0;
 let lastWin    = 0;
 let pollTimer  = null;
@@ -862,12 +868,18 @@ window.onload = () => {
   buildAllReels();
   updateUI();
   fetchLeaderboard();
-  setLang('en');
+  
+  // 🔥 ここでブラウザの言語を自動判定してセットします
+  const userLang = (navigator.language || navigator.userLanguage).substring(0, 2);
+  const defaultLang = ['ja', 'ko'].includes(userLang) ? userLang : 'en';
+  document.querySelector('.lang-select').value = defaultLang;
+  setLang(defaultLang);
+  
   spawnSparkles();
 };
 
 function spawnSparkles() {
-  const icons = ['✨','💖','⚡','💎','🌟','💫'];
+  const icons =['✨','💖','⚡','💎','🌟','💫'];
   for (let i = 0; i < 8; i++) {
     const el = document.createElement('div');
     el.className = 'sparkle';
@@ -1066,9 +1078,10 @@ function openDeposit(amount) {
     document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=lightning:${inv}`;
     document.getElementById('ln-link').href = `lightning:${inv}`;
     document.getElementById('modal-inv-text').value = inv;
-    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-      setTimeout(() => { window.location.href = `lightning:${inv}`; }, 700);
-    }
+    
+    // 🔥 ここをThe-Fiat-Burnerと同じに修正（PC・スマホ問わず無条件でWallet呼び出し）
+    setTimeout(() => { window.location.href = `lightning:${inv}`; }, 800);
+    
     startPolling(amount);
   })
   .catch(() => {
@@ -1178,19 +1191,27 @@ function shareToX() {
   const sym   = finalSyms.join(' ');
   const combo = finalSyms.join('');
   const mult  = MULTS[combo] || (pendingWin > 0 ? 1.5 : 0);
+  
+  // 🔥 選ばれた言語の射幸心セリフをシェア文に追加
+  const hype  = HYPE_QUOTES[lang][Math.floor(Math.random() * HYPE_QUOTES[lang].length)];
 
   let text = "";
   if (pendingWin > 0) {
-    const textEN = `I just won ${lastWin.toLocaleString()} SATS on ⚡ Lightning Slot! 🎰\n[ ${sym} ] — ×${mult}\nStack sats, have fun. First 10,000 sats are FREE 👇\n#Bitcoin #LightningNetwork #StackSats`;
-    const textJA = `⚡ Lightning Slotで ${lastWin.toLocaleString()} SATS 獲得！🎰\n[ ${sym} ] ×${mult}\n初回10,000 SATS無料！ 👇\n#Bitcoin #ライトニングネットワーク`;
-    const textKO = `⚡ Lightning Slot에서 ${lastWin.toLocaleString()} SATS 획득! 🎰\n[ ${sym} ] ×${mult}\n첫 10,000 SATS 무료! 👇\n#Bitcoin #라이트닝네트워크`;
-    text = lang === 'ja' ? textJA : lang === 'ko' ? textKO : textEN;
+    if (lang === 'ja') {
+      text = `⚡ Lightning Slotで ${lastWin.toLocaleString()} SATS 獲得！🎰\n[ ${sym} ] ×${mult}\n\n「${hype}」\n\n初回10,000 SATS無料！ 👇\n#Bitcoin #LightningNetwork`;
+    } else if (lang === 'ko') {
+      text = `⚡ Lightning Slot에서 ${lastWin.toLocaleString()} SATS 획득! 🎰\n[ ${sym} ] ×${mult}\n\n"${hype}"\n\n첫 10,000 SATS 무료! 👇\n#Bitcoin #라이트닝네트워크`;
+    } else {
+      text = `I just won ${lastWin.toLocaleString()} SATS on ⚡ Lightning Slot! 🎰\n[ ${sym} ] — ×${mult}\n\n"${hype}"\n\nFirst 10,000 sats are FREE 👇\n#Bitcoin #LightningNetwork #StackSats`;
+    }
   } else {
-    // 負けた場合や通常スピン時のシェアテキスト
-    const textEN = `I'm spinning ⚡ Lightning Slot! 🎰\n[ ${sym} ]\nThe next spin could be the jackpot. First 10,000 sats are FREE 👇\n#Bitcoin #LightningNetwork`;
-    const textJA = `⚡ Lightning Slotを回しているぞ！🎰\n[ ${sym} ]\n次のスピンがジャックポットかもしれない。初回10,000 SATS無料！ 👇\n#Bitcoin #ライトニングネットワーク`;
-    const textKO = `⚡ Lightning Slot 돌리는 중! 🎰\n[ ${sym} ]\n다음 스핀이 잭팟일지도 모른다. 첫 10,000 SATS 무료! 👇\n#Bitcoin #라이트닝네트워크`;
-    text = lang === 'ja' ? textJA : lang === 'ko' ? textKO : textEN;
+    if (lang === 'ja') {
+      text = `⚡ Lightning Slotを回しているぞ！🎰\n[ ${sym} ]\n\n「${hype}」\n\n初回10,000 SATS無料！ 👇\n#Bitcoin #LightningNetwork`;
+    } else if (lang === 'ko') {
+      text = `⚡ Lightning Slot 돌리는 중! 🎰\n[ ${sym} ]\n\n"${hype}"\n\n첫 10,000 SATS 무료! 👇\n#Bitcoin #라이트닝네트워크`;
+    } else {
+      text = `I'm spinning ⚡ Lightning Slot! 🎰\n[ ${sym} ]\n\n"${hype}"\n\nFirst 10,000 sats are FREE 👇\n#Bitcoin #LightningNetwork`;
+    }
   }
 
   const url  = encodeURIComponent("https://ck121212195.github.io/Lightning-Slot/"); // ご自身のURLに合わせてください
