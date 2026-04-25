@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>⚡ LIGHTNING SLOT ⚡</title>
+
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://ck121212195.github.io/Lightning-Slot/">
+  <meta property="og:site_name"   content="⚡ LIGHTNING SLOT">
+  <meta property="og:title"       content="⚡ LIGHTNING SLOT — Bet Sats. Win Sats.">
+  <meta property="og:description" content="ビットコインで遊ぶスロットマシン。初回10,000 SATS無料プレイ！Lightning Networkで勝ったSatsをゲット。 #Bitcoin">
+  <meta property="og:image"       content="https://ck121212195.github.io/Lightning-Slot/og-image.png">
+  <meta name="twitter:card"       content="summary_large_image">
+  <meta name="twitter:title"      content="⚡ LIGHTNING SLOT — Bet Sats. Win Sats.">
+  <meta name="twitter:description" content="初回10,000 SATS無料！スロットを回してSatsを稼げ。 #Bitcoin #LightningNetwork">
+  <meta name="twitter:image"      content="https://ck121212195.github.io/Lightning-Slot/og-image.png">
+
+  <link rel="icon"             type="image/png" href="favicon.png" sizes="32x32">
+  <link rel="apple-touch-icon" sizes="180x180"  href="favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       DESIGN SYSTEM — Cyber Kawaii Bitcoin 💖⚡
+    ============================================================ */
+    :root {
+      --gold:       #F7A800;
+      --gold-dark:  #B87800;
+      --gold-glow:  rgba(247,168,0,.65);
+      --orange:     #FF6200;
+      --pink:       #FF6EB4;
+      --pink-dark:  #C0387A;
+      --pink-glow:  rgba(255,110,180,.5);
+      --purple:     #C084FC;
+      --purple-dark:#7C3AED;
+      --purple-glow:rgba(192,132,252,.35);
+      --cyan:       #00E5FF;
+      --bg:         #08061A;
+      --bg2:        #100D24;
+      --bg3:        #1A1438;
+      --border:     #2A1F5A;
+      --border-hi:  #4A32A0;
+      --text:       #EDE9FF;
+      --muted:      #6A5A9A;
+      --green:      #2EFF8A;
+      --red:        #FF4565;
+      --blue:       #4B9EFF;
+      --reel-bg:    #060412;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: linear-gradient(160deg, #08061A 0%, #12082A 45%, #08111A 100%);
+      color: var(--text);
+      font-family: 'Share Tech Mono', 'Noto Sans JP', 'Noto Sans KR', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+      padding-bottom: 60px;
+    }
+
+    /* Scanlines */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 1000;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 3px,
+        rgba(0,0,0,.06) 3px, rgba(0,0,0,.06) 4px
+      );
+    }
+
+    /* Ambient glow */
+    .ambient {
+      position: fixed;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 400px;
+      background:
+        radial-gradient(ellipse at 35% 40%, rgba(247,168,0,.07) 0%, transparent 55%),
+        radial-gradient(ellipse at 65% 30%, rgba(255,110,180,.08) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 70%, rgba(192,132,252,.05) 0%, transparent 55%);
+      pointer-events: none; z-index: 0;
+    }
+
+    @keyframes sparkleFloat {
+      0%   { transform: translateY(0) scale(1);   opacity: 0; }
+      20%  { opacity: 1; }
+      80%  { opacity: .7; }
+      100% { transform: translateY(-80px) scale(.4); opacity: 0; }
+    }
+    .sparkle {
+      position: fixed; pointer-events: none; z-index: 1;
+      font-size: 14px;
+      animation: sparkleFloat linear infinite;
+    }
+
+    /* ============================================================
+       HEADER
+    ============================================================ */
+    .header {
+      width: 100%; max-width: 440px;
+      text-align: center;
+      padding: 32px 16px 18px;
+      position: relative; z-index: 2;
+    }
+
+    .header-eyebrow {
+      font-size: 9px;
+      background: linear-gradient(90deg, var(--gold), var(--pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: 5px; margin-bottom: 10px;
+    }
+
+    .header-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(13px, 4.5vw, 22px);
+      background: linear-gradient(135deg, var(--gold) 0%, var(--pink) 60%, var(--purple) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: 3px; line-height: 1.5;
+      filter: drop-shadow(0 0 20px rgba(247,168,0,.4)) drop-shadow(0 0 40px rgba(255,110,180,.25));
+    }
+
+    .header-sub {
+      font-size: 10px; color: var(--muted);
+      letter-spacing: 4px; margin-top: 8px;
+    }
+
+    .lang-wrap {
+      position: absolute; top: 20px; right: 16px;
+    }
+    select.lang-select {
+      background: var(--bg3); color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 6px 10px; border-radius: 8px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px; cursor: pointer; outline: none;
+      transition: border-color .2s;
+    }
+    select.lang-select:hover { border-color: var(--pink); }
+
+    /* ============================================================
+       MAIN COLUMN & PANELS
+    ============================================================ */
+    .main {
+      width: 100%; max-width: 440px;
+      padding: 0 14px;
+      display: flex; flex-direction: column; gap: 12px;
+      position: relative; z-index: 2;
+    }
+
+    .panel {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .panel::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,110,180,.3), rgba(247,168,0,.4), rgba(255,110,180,.3), transparent);
+    }
+
+    /* ============================================================
+       BALANCE & DEPOSIT
+    ============================================================ */
+    .balance-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .bal-cell { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }
+    .bal-label { font-size: 8px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+    .bal-val { font-family: 'Press Start 2P', monospace; font-size: 11px; color: var(--green); }
+    .bal-val.gold { color: var(--gold); }
+    .bal-val sup { font-size: 7px; color: var(--muted); margin-left: 3px; }
+
+    .free-banner {
+      background: linear-gradient(135deg, #1A0D30 0%, #0D1A30 100%);
+      border: 1px solid #3A1F6A;
+      border-radius: 12px; padding: 12px 16px;
+      display: flex; align-items: center; gap: 12px;
+      font-size: 11px; color: var(--purple); line-height: 1.6;
+    }
+    .free-banner .icon { font-size: 22px; flex-shrink: 0; }
+    .free-banner strong { display: block; font-size: 10px; margin-bottom: 2px; color: var(--pink); }
+
+    .deposit-section { display: none; flex-direction: column; gap: 8px; }
+    .deposit-section.visible { display: flex; }
+    .dep-label {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px; color: var(--muted);
+      letter-spacing: 2px; text-align: center; margin-bottom: 2px;
+    }
+    .dep-opts { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .btn-dep {
+      padding: 12px 6px;
+      background: var(--bg3); border: 1px solid var(--border-hi);
+      border-radius: 10px; color: var(--text);
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px; line-height: 1.7;
+      cursor: pointer; transition: all .15s; text-align: center;
+    }
+    .btn-dep:hover { border-color: var(--pink); color: var(--pink); box-shadow: 0 0 12px var(--pink-glow); }
+    .btn-dep:active { transform: scale(.96); }
+    .btn-dep span { display: block; font-size: 8px; color: var(--muted); margin-top: 2px; }
+
+    /* ============================================================
+       REELS
+    ============================================================ */
+    .reels-wrap {
+      padding: 12px;
+      background: var(--reel-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      position: relative; margin-bottom: 12px;
+    }
+    .payline {
+      position: absolute; top: 50%; left: 10px; right: 10px; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255,110,180,.5), rgba(247,168,0,.6), rgba(255,110,180,.5), transparent);
+      transform: translateY(-50%); pointer-events: none;
+    }
+    .reels-row { display: flex; gap: 7px; justify-content: center; }
+
+    .reel {
+      flex: 1; max-width: 110px; height: 88px; overflow: hidden;
+      border: 1px solid var(--border-hi); border-radius: 10px;
+      background: #030208; position: relative;
+    }
+    .reel::before, .reel::after {
+      content: ''; position: absolute; left: 0; right: 0;
+      height: 22px; z-index: 2; pointer-events: none;
+    }
+    .reel::before { top: 0;    background: linear-gradient(180deg, #030208 0%, transparent 100%); }
+    .reel::after  { bottom: 0; background: linear-gradient(0deg,   #030208 0%, transparent 100%); }
+
+    .reel-inner { display: flex; flex-direction: column; align-items: center; will-change: transform; }
+    .reel-sym {
+      width: 100%; height: 88px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 40px; flex-shrink: 0; user-select: none;
+    }
+
+    .reel.is-winner { animation: reelWin .35s ease 4; }
+    @keyframes reelWin {
+      0%,100% { border-color: var(--border-hi); box-shadow: none; }
+      50% { border-color: var(--pink); box-shadow: 0 0 20px var(--pink-glow), 0 0 8px var(--gold-glow); }
+    }
+
+    /* ============================================================
+       BET CONTROLS & SPIN
+    ============================================================ */
+    .bet-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .bet-label { font-size: 8px; color: var(--muted); letter-spacing: 2px; flex-shrink: 0; }
+    .bet-step {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 14px; padding: 5px 14px;
+      cursor: pointer; flex-shrink: 0; transition: all .1s;
+    }
+    .bet-step:hover { border-color: var(--pink); color: var(--pink); box-shadow: 0 0 8px var(--pink-glow); }
+    .bet-step:active { transform: scale(.94); }
+    .bet-display {
+      flex: 1; text-align: center;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 12px; color: var(--gold);
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 8px 4px;
+    }
+    .bet-max {
+      background: transparent; border: 1px solid var(--border);
+      border-radius: 8px; color: var(--muted);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 9px; letter-spacing: 1px;
+      padding: 5px 10px; cursor: pointer; flex-shrink: 0; transition: all .1s;
+    }
+    .bet-max:hover { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 8px var(--gold-glow); }
+
+    .spin-btn {
+      width: 100%; padding: 17px;
+      background: linear-gradient(135deg, var(--gold) 0%, #FFA040 40%, var(--pink) 100%);
+      color: #08060A;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 14px; letter-spacing: 3px;
+      border: none; border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 5px 0 var(--gold-dark), 0 0 30px rgba(255,110,180,.3);
+      transition: all .1s; position: relative; overflow: hidden;
+    }
+    .spin-btn::before {
+      content: '';
+      position: absolute; top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+      transform: skewX(-15deg); transition: left .5s;
+    }
+    .spin-btn:hover::before { left: 160%; }
+    .spin-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 0 var(--gold-dark), 0 0 40px rgba(255,110,180,.5); }
+    .spin-btn:active:not(:disabled) { transform: translateY(4px); box-shadow: 0 1px 0 var(--gold-dark); }
+    .spin-btn:disabled { background: #1C1828; color: #3A3060; cursor: not-allowed; box-shadow: none; }
+
+    /* ============================================================
+       RESULT MESSAGE & ACTION AREA
+    ============================================================ */
+    .result-msg {
+      text-align: center; margin-top: 10px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px; min-height: 28px; line-height: 2;
+      color: var(--muted);
+    }
+    .result-msg.win { color: var(--green); text-shadow: 0 0 12px rgba(46,255,138,.4); }
+    .result-msg.lose { color: var(--red); }
+    .result-msg.jackpot {
+      background: linear-gradient(90deg, var(--gold), var(--pink), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      font-size: 11px; animation: jackpotPulse .6s ease infinite alternate;
+      filter: drop-shadow(0 0 12px var(--gold-glow));
+    }
+    @keyframes jackpotPulse { from { opacity: .7; } to { opacity: 1; } }
+
+    .share-btn {
+      width: 100%; padding: 12px;
+      background: transparent; border: 1px solid var(--border-hi);
+      border-radius: 10px; color: var(--text);
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px; letter-spacing: 1px; cursor: pointer; transition: all .15s;
+    }
+    .share-btn:hover { border-color: var(--purple); background: rgba(192,132,252,.06); }
+
+    /* ============================================================
+       INVOICE MODAL
+    ============================================================ */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(8,6,26,.92);
+      backdrop-filter: blur(8px); z-index: 200;
+      justify-content: center; align-items: center; padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: var(--bg2);
+      border: 1px solid var(--pink);
+      border-radius: 18px; width: 100%; max-width: 360px;
+      padding: 24px 20px; text-align: center;
+      box-shadow: 0 0 50px rgba(255,110,180,.15);
+    }
+    .modal-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 11px; color: var(--pink); margin-bottom: 16px; line-height: 1.6;
+    }
+    .modal-qr img { width: 200px; height: 200px; border: 3px solid var(--pink); border-radius: 10px; margin: 0 auto 10px; display: block; }
+    .modal-inv {
+      width: 100%; padding: 10px; background: var(--bg); color: var(--green);
+      border: 1px solid var(--border); border-radius: 8px;
+      font-family: 'Share Tech Mono', monospace; font-size: 9px; margin-bottom: 10px;
+      resize: none; word-break: break-all; height: 50px; cursor: pointer;
+    }
+    .modal-waiting { font-size: 10px; color: var(--orange); animation: blink 1.2s infinite; margin: 6px 0 12px; }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:.4;} }
+    .btn-modal-close {
+      width: 100%; padding: 12px; background: transparent; border: 1px solid var(--border);
+      border-radius: 10px; color: var(--muted); font-family: 'Share Tech Mono', monospace;
+      font-size: 11px; cursor: pointer; transition: all .15s;
+    }
+    .btn-modal-close:hover { border-color: var(--border-hi); color: var(--text); }
+
+    /* ============================================================
+       WIN OVERLAY
+    ============================================================ */
+    .win-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(8,6,26,.92); z-index: 300;
+      justify-content: center; align-items: center; padding: 20px;
+    }
+    .win-overlay.open { display: flex; }
+    .win-box {
+      background: var(--bg2);
+      border: 1px solid var(--pink);
+      border-radius: 18px; padding: 28px 22px; width: 100%; max-width: 360px; text-align: center;
+      box-shadow: 0 0 60px rgba(255,110,180,.2);
+    }
+    .win-box h2 {
+      font-family: 'Press Start 2P', monospace; font-size: 15px;
+      background: linear-gradient(90deg, var(--gold), var(--pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 8px; text-shadow: none;
+      filter: drop-shadow(0 0 16px var(--gold-glow));
+    }
+    .win-amount {
+      font-family: 'Press Start 2P', monospace; font-size: 22px; color: var(--green);
+      margin: 14px 0; text-shadow: 0 0 20px rgba(46,255,138,.4);
+    }
+    .win-box p { font-size: 10px; color: var(--muted); line-height: 1.8; margin-bottom: 14px; }
+    .win-name-input {
+      width: 100%; padding: 12px; background: var(--bg); border: 1px solid var(--pink);
+      border-radius: 10px; color: var(--text);
+      font-family: 'Press Start 2P', monospace; font-size: 10px; text-align: center;
+      margin-bottom: 12px; letter-spacing: 2px;
+    }
+    .win-name-input::placeholder { color: var(--muted); }
+    .btn-win-submit {
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, var(--gold), var(--pink));
+      color: #000; font-family: 'Press Start 2P', monospace;
+      font-size: 11px; letter-spacing: 2px; border: none; border-radius: 10px;
+      cursor: pointer; transition: all .1s; margin-bottom: 10px;
+    }
+    .btn-win-submit:hover { filter: brightness(1.1); }
+    .btn-win-skip {
+      width: 100%; padding: 10px; background: transparent; border: 1px solid var(--border);
+      border-radius: 10px; color: var(--muted); font-family: 'Share Tech Mono', monospace;
+      font-size: 11px; cursor: pointer;
+    }
+    .btn-win-skip:hover { border-color: var(--border-hi); color: var(--text); }
+
+    /* ============================================================
+       STATS, HOWTO, LEADERBOARD, ETC...
+    ============================================================ */
+    .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .stat-cell { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 8px; text-align: center; }
+    .stat-label { font-size: 8px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; }
+    .stat-val { font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--text); }
+    .stat-val.green { color: var(--green); }
+    .stat-val.gold  { color: var(--gold); }
+
+    .section-title {
+      font-family: 'Press Start 2P', monospace; font-size: 9px;
+      background: linear-gradient(90deg, var(--gold), var(--pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: 3px; text-align: center; margin-bottom: 14px;
+      filter: drop-shadow(0 0 8px var(--gold-glow));
+    }
+    .pay-table { width: 100%; border-collapse: collapse; }
+    .pay-table tr { border-bottom: 1px solid var(--border); }
+    .pay-table tr:last-child { border-bottom: none; }
+    .pay-table td { padding: 8px 4px; vertical-align: middle; font-size: 12px; }
+    .pay-table .td-sym { letter-spacing: 4px; font-size: 16px; width: 110px; }
+    .pay-table .td-mult { font-family: 'Press Start 2P', monospace; font-size: 9px; color: var(--gold); text-align: right; white-space: nowrap; }
+    .pay-table .td-note { color: var(--muted); font-size: 10px; padding-left: 10px; }
+
+    .howto-steps { display: flex; flex-direction: column; gap: 12px; }
+    .howto-step { display: flex; gap: 12px; align-items: flex-start; }
+    .howto-num { font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--pink); flex-shrink: 0; margin-top: 2px; }
+    .howto-text strong { display: block; font-size: 10px; margin-bottom: 4px; color: var(--text); }
+    .howto-text p { font-size: 11px; color: var(--muted); line-height: 1.6; }
+
+    .lb-row { display: flex; align-items: center; padding: 9px 4px; border-bottom: 1px solid var(--border); font-size: 12px; }
+    .lb-row:last-child { border-bottom: none; }
+    .lb-rank { font-size: 10px; color: var(--muted); margin-right: 10px; width: 26px; text-align: center; flex-shrink: 0; }
+    .lb-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lb-sats { font-family: 'Press Start 2P', monospace; font-size: 9px; color: var(--gold); white-space: nowrap; }
+    .lb-row.rank-1 .lb-rank, .lb-row.rank-1 .lb-name, .lb-row.rank-1 .lb-sats { color: #FFD700; }
+    .lb-row.rank-2 .lb-rank { color: #C0C0C0; }
+    .lb-row.rank-3 .lb-rank { color: #CD7F32; }
+
+    .confetti-piece {
+      position: fixed; width: 8px; height: 8px;
+      border-radius: 2px; pointer-events: none; z-index: 400;
+      animation: cFall 1.6s ease-out forwards;
+    }
+    @keyframes cFall {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(320px) rotate(720deg); opacity: 0; }
+    }
+
+    .footer {
+      margin-top: 40px; font-size: 10px; color: var(--muted);
+      text-align: center; line-height: 2.2; padding: 0 16px; position: relative; z-index: 2;
+    }
+    .footer a { color: var(--blue); text-decoration: none; }
+
+    /* ============================================================
+       WALLET PANEL
+    ============================================================ */
+    .wallet-panel { border-color: var(--pink); }
+    .wallet-header {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+    }
+    .wallet-icon {
+      font-size: 18px; flex-shrink: 0;
+      filter: drop-shadow(0 0 8px var(--gold));
+    }
+    .wallet-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px; flex: 1;
+      background: linear-gradient(90deg, var(--gold), var(--pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: 2px;
+    }
+    .wallet-deposit-btn {
+      padding: 7px 12px;
+      background: linear-gradient(135deg, var(--gold), var(--orange));
+      color: #000; border: none; border-radius: 8px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px; cursor: pointer; letter-spacing: 1px;
+      box-shadow: 0 2px 10px rgba(247,168,0,.35);
+      transition: all .15s; white-space: nowrap;
+    }
+    .wallet-deposit-btn:hover { filter: brightness(1.15); transform: translateY(-1px); }
+    .wallet-deposit-btn:active { transform: translateY(1px); }
+    .wallet-progress-wrap {
+      background: var(--bg); border-radius: 999px; height: 6px; margin-top: 10px; overflow: hidden;
+    }
+    .wallet-progress-bar {
+      height: 100%; border-radius: 999px;
+      background: linear-gradient(90deg, var(--gold), var(--pink));
+      width: 100%; transition: width .5s ease;
+      box-shadow: 0 0 8px var(--gold-glow);
+    }
+    .wallet-tip {
+      font-size: 10px; color: var(--purple); margin-top: 8px;
+      text-align: center; line-height: 1.6; letter-spacing: .5px;
+    }
+
+    /* ============================================================
+       LEADERBOARD ENHANCED
+    ============================================================ */
+    .lb-panel { border-color: rgba(247,168,0,.3); }
+    .lb-legend {
+      display: flex; justify-content: space-between;
+      font-size: 9px; color: var(--muted); letter-spacing: 2px;
+      margin-bottom: 8px; padding: 0 4px; text-transform: uppercase;
+    }
+    .lb-row { display: flex; align-items: center; padding: 11px 6px; border-bottom: 1px solid var(--border); font-size: 12px; gap: 6px; }
+    .lb-row:last-child { border-bottom: none; }
+    .lb-rank { font-size: 16px; width: 28px; text-align: center; flex-shrink: 0; }
+    .lb-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; }
+    .lb-sats { font-family: 'Press Start 2P', monospace; font-size: 9px; color: var(--gold); white-space: nowrap; }
+    .lb-row.rank-1 { background: rgba(255,215,0,.05); border-radius: 8px; }
+    .lb-row.rank-1 .lb-name, .lb-row.rank-1 .lb-sats { color: #FFD700; }
+    .lb-row.rank-2 .lb-rank { color: #C0C0C0; }
+    .lb-row.rank-3 .lb-rank { color: #CD7F32; }
+    .lb-footer-note {
+      text-align: center; font-size: 10px; color: var(--muted);
+      margin-top: 12px; padding-top: 10px;
+      border-top: 1px dashed var(--border);
+      letter-spacing: .5px; line-height: 1.6;
+    }
+
+    /* ============================================================
+       SHARE KAWAII SECTION
+    ============================================================ */
+    .share-kawaii {
+      background: linear-gradient(135deg, rgba(255,110,180,.08), rgba(192,132,252,.08));
+      border: 1px solid rgba(255,110,180,.25);
+      border-radius: 12px; padding: 14px; margin-bottom: 12px;
+    }
+    .share-kawaii-emoji { font-size: 28px; margin-bottom: 6px; }
+    .share-kawaii-text { font-size: 10px; color: var(--purple); line-height: 1.7; margin-bottom: 10px; }
+    .share-kawaii-btn {
+      width: 100%; padding: 13px;
+      background: linear-gradient(135deg, #1DA1F2, #7A4FFF);
+      color: #fff; border: none; border-radius: 10px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px; letter-spacing: 1px; cursor: pointer;
+      box-shadow: 0 3px 14px rgba(29,161,242,.35);
+      transition: all .15s;
+    }
+    .share-kawaii-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+
+<div class="ambient"></div>
+
+<!-- ============================================================
+     HEADER
+============================================================ -->
+<div class="header">
+  <div class="lang-wrap">
+    <select class="lang-select" onchange="setLang(this.value)">
+      <option value="en">🇺🇸 EN</option>
+      <option value="ja">🇯🇵 JA</option>
+      <option value="ko">🇰🇷 KO</option>
+    </select>
+  </div>
+  <div class="header-eyebrow">POWERED BY BITCOIN LIGHTNING</div>
+  <div class="header-title">⚡ LIGHTNING SLOT ⚡</div>
+  <div class="header-sub" data-i18n="subtitle">BET SATS · WIN SATS · ON-CHAIN PROOF</div>
+</div>
+
+<!-- ============================================================
+     MAIN
+============================================================ -->
+<div class="main">
+
+  <!-- Wallet Panel -->
+  <div class="panel wallet-panel">
+    <div class="wallet-header">
+      <span class="wallet-icon">⚡</span>
+      <span class="wallet-title" data-i18n="wallet_title">MY LIGHTNING WALLET</span>
+      <button class="wallet-deposit-btn" onclick="showDepositSectionAndScroll()" data-i18n="wallet_deposit">＋ DEPOSIT</button>
+    </div>
+    <div class="balance-bar">
+      <div class="bal-cell">
+        <div class="bal-label" data-i18n="balance">BALANCE</div>
+        <div class="bal-val" id="balance-display">0 <sup>SATS</sup></div>
+      </div>
+      <div class="bal-cell">
+        <div class="bal-label" data-i18n="won">SESSION WON</div>
+        <div class="bal-val gold" id="won-display">0 <sup>SATS</sup></div>
+      </div>
+    </div>
+    <div class="wallet-progress-wrap">
+      <div class="wallet-progress-bar" id="wallet-progress-bar"></div>
+    </div>
+    <div class="wallet-tip" id="wallet-tip">🎁 First 10,000 SATS are FREE — just hit SPIN!</div>
+  </div>
+
+  <!-- Free credits banner / Deposit section -->
+  <div id="free-banner" class="free-banner">
+    <div class="icon">🎁</div>
+    <div>
+      <strong data-i18n="free_title">WELCOME BONUS: 10,000 SATS FREE!</strong>
+      <span data-i18n="free_desc">First play is on the house. Deposit to keep winning.</span>
+    </div>
+  </div>
+
+  <div class="deposit-section" id="deposit-section">
+    <div class="dep-label" data-i18n="dep_label">⚡ DEPOSIT SATS TO CONTINUE</div>
+    <div class="dep-opts">
+      <button class="btn-dep" onclick="openDeposit(1000)">1,000<span>SATS</span></button>
+      <button class="btn-dep" onclick="openDeposit(5000)">5,000<span>SATS</span></button>
+      <button class="btn-dep" onclick="openDeposit(10000)">10,000<span>SATS</span></button>
+    </div>
+  </div>
+
+  <!-- Slot Machine -->
+  <div class="panel">
+
+    <div class="reels-wrap">
+      <div class="payline"></div>
+      <div class="reels-row">
+        <div class="reel" id="reel0"><div class="reel-inner" id="inner0"></div></div>
+        <div class="reel" id="reel1"><div class="reel-inner" id="inner1"></div></div>
+        <div class="reel" id="reel2"><div class="reel-inner" id="inner2"></div></div>
+      </div>
+    </div>
+
+    <div class="bet-row">
+      <span class="bet-label" data-i18n="bet">BET</span>
+      <button class="bet-step" onclick="changeBet(-1)">−</button>
+      <div class="bet-display" id="bet-display">10</div>
+      <button class="bet-step" onclick="changeBet(1)">+</button>
+      <button class="bet-max" onclick="setMaxBet()">MAX</button>
+    </div>
+
+    <button class="spin-btn" id="spin-btn" onclick="spin()">
+      <span data-i18n="spin">SPIN ⚡</span>
+    </button>
+    <div class="result-msg" id="result-msg" data-i18n="msg_ready">— READY TO SPIN —</div>
+    
+    <div id="post-action-area" style="display: none; flex-direction: column; gap: 10px; margin-top: 10px;">
+      <div class="hype-quote" id="main-hype-quote" style="text-align: center; font-size: 11px; color: var(--pink); font-style: italic; margin-bottom: 5px; line-height: 1.4;"></div>
+      <button class="share-btn" style="display:block; margin-top:0;" onclick="shareToX()">🐦 <span data-i18n="share">SHARE TO X / TWITTER</span></button>
+      <button class="btn-win-submit" style="width:100%; margin-bottom:0;" onclick="showDepositSectionAndScroll()">⚡ <span data-i18n="dep_more">DEPOSIT MORE SATS</span></button>
+    </div>
+  </div>
+
+  <!-- Session stats -->
+  <div class="stats-row">
+    <div class="stat-cell">
+      <div class="stat-label" data-i18n="stat_spins">SPINS</div>
+      <div class="stat-val" id="stat-spins">0</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label" data-i18n="stat_wins">WINS</div>
+      <div class="stat-val green" id="stat-wins">0</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label" data-i18n="stat_best">BIGGEST</div>
+      <div class="stat-val gold" id="stat-best">—</div>
+    </div>
+  </div>
+
+  <!-- How to play -->
+  <div class="panel">
+    <div class="section-title" data-i18n="howto_title">📖 HOW TO PLAY</div>
+    <div class="howto-steps">
+      <div class="howto-step">
+        <div class="howto-num">01</div>
+        <div class="howto-text">
+          <strong data-i18n="howto1_title">FREE FIRST PLAY</strong>
+          <p data-i18n="howto1_desc">You start with 10,000 FREE SATS. No deposit needed. Just hit SPIN!</p>
+        </div>
+      </div>
+      <div class="howto-step">
+        <div class="howto-num">02</div>
+        <div class="howto-text">
+          <strong data-i18n="howto2_title">BET &amp; SPIN</strong>
+          <p data-i18n="howto2_desc">Set your bet (10–10,000 sats) and spin. Match 3 symbols to win. Even 2 matching symbols returns ×1.5!</p>
+        </div>
+      </div>
+      <div class="howto-step">
+        <div class="howto-num">03</div>
+        <div class="howto-text">
+          <strong data-i18n="howto3_title">DEPOSIT TO KEEP WINNING</strong>
+          <p data-i18n="howto3_desc">After free credits run out, deposit via Lightning. Your wallet opens automatically on mobile.</p>
+        </div>
+      </div>
+      <div class="howto-step">
+        <div class="howto-num">04</div>
+        <div class="howto-text">
+          <strong data-i18n="howto4_title">CLIMB THE LEADERBOARD</strong>
+          <p data-i18n="howto4_desc">Big wins get posted to the leaderboard. Hit JACKPOT (⚡⚡⚡ = ×50) and your name lives forever.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pay table -->
+  <div class="panel">
+    <div class="section-title" data-i18n="paytable_title">— PAY TABLE —</div>
+    <table class="pay-table">
+      <tr><td class="td-sym">⚡⚡⚡</td><td class="td-mult">×50</td><td class="td-note">JACKPOT ⚡</td></tr>
+      <tr><td class="td-sym">₿₿₿</td>  <td class="td-mult">×20</td><td class="td-note">Bitcoin Triple</td></tr>
+      <tr><td class="td-sym">🔑🔑🔑</td><td class="td-mult">×10</td><td class="td-note">Keys Triple</td></tr>
+      <tr><td class="td-sym">💎💎💎</td><td class="td-mult">×8</td> <td class="td-note">Diamond Triple</td></tr>
+      <tr><td class="td-sym">🌕🌕🌕</td><td class="td-mult">×5</td> <td class="td-note">Moon Triple</td></tr>
+      <tr><td class="td-sym">🔥🔥🔥</td><td class="td-mult">×3</td> <td class="td-note">Fire Triple</td></tr>
+      <tr><td class="td-sym" style="font-size:11px;letter-spacing:0" data-i18n="any2">Any 2 match</td><td class="td-mult">×1.5</td><td class="td-note" data-i18n="any2note">Any pair</td></tr>
+    </table>
+  </div>
+
+  <!-- Leaderboard -->
+  <div class="panel lb-panel">
+    <div class="section-title">🏆 TOP 5 WINNERS</div>
+    <div class="lb-legend">
+      <span>PLAYER</span>
+      <span>BIGGEST WIN</span>
+    </div>
+    <div id="lb-content">
+      <div style="color:var(--muted);font-size:11px;text-align:center;padding:12px 0">⚡ Loading...</div>
+    </div>
+    <div class="lb-footer-note" data-i18n="lb_note">Win big to engrave your name here forever ⚡</div>
+  </div>
+
+</div>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<div class="footer">
+  ⚡ Bitcoin Lightning Network<br>
+  <a href="https://ck121212195.github.io/The-Fiat-Burner/">🔥 THE FIAT BURNER</a>
+  &nbsp;·&nbsp; Not financial advice. Have fun. Stack sats.
+</div>
+
+<!-- ============================================================
+     INVOICE MODAL
+============================================================ -->
+<div class="modal-overlay" id="modal-invoice">
+  <div class="modal-box">
+    <div class="modal-title" data-i18n="modal_title">⚡ PAY TO DEPOSIT</div>
+    <div class="modal-qr"><a id="ln-link" href="#"><img id="qr-img" src="" alt="QR"></a></div>
+    <div style="font-size:9px;color:var(--muted);margin-bottom:8px" data-i18n="tap_qr">Tap QR to open wallet</div>
+    <textarea class="modal-inv" id="modal-inv-text" readonly onclick="this.select()"></textarea>
+    <div class="modal-waiting" data-i18n="modal_waiting">⏳ Waiting for payment...</div>
+    
+    <!-- 追加: Fiat Burner にあった手動確認ボタン -->
+    <button class="btn-win-submit" style="width:100%; margin-bottom:10px; font-size:11px;" onclick="verifyPayment()">VERIFY PAYMENT</button>
+    <button class="btn-modal-close" onclick="closeModal()" data-i18n="btn_cancel">CANCEL</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     WIN OVERLAY
+============================================================ -->
+<div class="win-overlay" id="win-overlay">
+  <div class="win-box">
+    <h2 id="win-title">YOU WON!</h2>
+    <div class="win-amount" id="win-amount-disp">+0 SATS</div>
+    
+    <div id="win-form-area">
+      <p data-i18n="win_p">Enter your name to claim a spot on the leaderboard!</p>
+      <input type="text" class="win-name-input" id="win-name" placeholder="YOUR NAME / NPUB" maxlength="24">
+      <button class="btn-win-submit" id="btn-win-submit" onclick="submitWin()">
+        <span data-i18n="engrave">⚡ ENGRAVE MY NAME</span>
+      </button>
+      <button class="btn-win-skip" onclick="closeWinOverlay()" data-i18n="skip">Skip</button>
+    </div>
+
+    <div id="win-action-area" style="display: none; margin-top: 15px;">
+      <div class="share-kawaii">
+        <div class="share-kawaii-emoji" id="win-share-emoji">🎰✨</div>
+        <div class="share-kawaii-text" id="win-share-text">Bragging on X is half the fun! Let everyone know you're a sats stacker 💖</div>
+        <button class="share-kawaii-btn" onclick="shareToX()">🐦 SHARE TO X / TWITTER</button>
+      </div>
+      <button class="btn-win-submit" style="width:100%; margin-bottom:0;" onclick="closeWinOverlayAndSpin()">🎰 <span data-i18n="keep_spinning">KEEP SPINNING</span></button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+/* ============================================================
+   CONFIG
+============================================================ */
+const LNBITS_API_KEY = "67e5b0ad270f44d19e6d768bb3314e49";
+const LNBITS_URL     = "https://demo.lnbits.com/api/v1/payments";
+const GAS_URL        = "https://script.google.com/macros/s/AKfycbw2zH2M6fE9_iNc8qk9NSTWdSb5Wt5a6qj8kLxxDNnMd9X6E-ZTahlRRgwSUqRMKSAvXw/exec";
+const FREE_CREDITS   = 10000;
+
+/* ============================================================
+   HYPE QUOTES (射幸心煽りセリフ)
+============================================================ */
+const HYPE_QUOTES = {
+  en:[
+    "The next spin could be the JACKPOT. Don't stop now.",
+    "Winners never quit. Quitters never win.",
+    "You're just one spin away from Lambo.",
+    "Stacking sats has never been this thrilling!",
+    "The Lightning Network craves more action. Spin it!",
+    "Are you a whale or a pleb? Prove it.",
+    "Fortune favors the bold."
+  ],
+  ja:[
+    "次のスピンでジャックポットかもしれない。ここでやめるのか？",
+    "勝者は決して諦めない。諦める者に勝利はない。",
+    "ランボルギーニまであと1スピンの距離だ。",
+    "Satsを稼ぐのがこんなに興奮するとはな！",
+    "稲妻(Lightning)が次のベットを待っているぞ！",
+    "お前はクジラか、それとも名もなきプレブか？証明してみせろ。",
+    "幸運は勇者に味方する。全ツッパだ。"
+  ],
+  ko:[
+    "다음 스핀이 잭팟일지도 모른다. 여기서 멈출 텐가?",
+    "승자는 절대 포기하지 않는다. 포기하는 자에겐 승리가 없다.",
+    "람보르기니까지 단 한 스핀 남았다.",
+    "Sats를 쌓는 게 이렇게 짜릿할 줄이야!",
+    "번개(Lightning)가 너의 다음 베팅을 기다린다!",
+    "너는 고래인가, 아니면 평범한 플레브인가? 증명해봐라.",
+    "행운은 용기 있는 자의 편이다."
+  ]
+};
+
+/* ============================================================
+   i18n (EN / JA / KO)
+============================================================ */
+const I18N = {
+  en: {
+    subtitle: "BET SATS · WIN SATS · ON-CHAIN PROOF",
+    balance: "BALANCE", won: "SESSION WON", bet: "BET", spin: "SPIN ⚡",
+    free_title: "WELCOME BONUS: 10,000 SATS FREE!",
+    free_desc: "First play is on the house. Deposit to keep winning.",
+    dep_label: "⚡ DEPOSIT SATS TO CONTINUE",
+    msg_ready: "— READY TO SPIN —",
+    msg_spinning: "⚡ SPINNING...",
+    msg_win: "WIN!  +", msg_lose: "NO MATCH — SPIN AGAIN",
+    msg_jackpot: "⚡ JACKPOT!  +", msg_refill: "FREE CREDITS USED UP — DEPOSIT TO CONTINUE",
+    share: "SHARE TO X / TWITTER",
+    dep_more: "DEPOSIT MORE SATS",
+    keep_spinning: "KEEP SPINNING",
+    stat_spins:"SPINS", stat_wins:"WINS", stat_best:"BIGGEST",
+    howto_title: "📖 HOW TO PLAY",
+    howto1_title:"FREE FIRST PLAY",
+    howto1_desc: "You start with 10,000 FREE SATS. No deposit needed. Just hit SPIN!",
+    howto2_title:"BET & SPIN",
+    howto2_desc: "Set your bet (10–10,000 sats) and spin. Match 3 symbols to win. Even 2 matching symbols returns ×1.5!",
+    howto3_title:"DEPOSIT TO KEEP WINNING",
+    howto3_desc: "After free credits run out, deposit via Lightning. Your wallet opens automatically on mobile.",
+    howto4_title:"CLIMB THE LEADERBOARD",
+    howto4_desc: "Big wins get posted to the leaderboard. Hit JACKPOT (⚡⚡⚡ = ×50) and your name lives forever.",
+    paytable_title:"— PAY TABLE —", any2:"Any 2 match", any2note:"Any pair",
+    modal_title:"⚡ PAY TO DEPOSIT", tap_qr:"Tap QR to open wallet",
+    modal_waiting:"⏳ Waiting for payment...", btn_cancel:"CANCEL",
+    win_p:"Enter your name to claim a spot on the leaderboard!",
+    engrave:"⚡ ENGRAVE MY NAME", skip:"Skip",
+    wallet_title:"MY LIGHTNING WALLET", wallet_deposit:"＋ DEPOSIT",
+    lb_note:"Win big to engrave your name here forever ⚡"
+  },
+  ja: {
+    subtitle: "SATSを賭けろ · SATSを勝ち取れ",
+    balance: "残高", won: "今回の獲得", bet: "賭け金", spin: "スピン ⚡",
+    free_title: "🎁 ウェルカムボーナス: 10,000 SATS 無料！",
+    free_desc: "初回プレイは無料。使い切ったら入金して続けよう。",
+    dep_label: "⚡ 続けるにはSATSを入金",
+    msg_ready: "— スピンする準備OK —",
+    msg_spinning: "⚡ 回転中...",
+    msg_win: "当たり！ +", msg_lose: "ハズレ — もう一回",
+    msg_jackpot: "⚡ ジャックポット！ +", msg_refill: "無料クレジット終了 — 入金して続けよう",
+    share: "X / Twitter でシェア",
+    dep_more: "さらにSATSを入金",
+    keep_spinning: "もっと回す",
+    stat_spins:"回数", stat_wins:"当たり", stat_best:"最高",
+    howto_title: "📖 遊び方",
+    howto1_title:"初回無料プレイ",
+    howto1_desc: "10,000 SATSの無料クレジットがあります。入金不要！SPINを押すだけ。",
+    howto2_title:"賭けてスピン",
+    howto2_desc: "賭け金を選んでスピン(10〜10,000 sats)。3つ揃えば勝ち。2つ揃いでも×1.5の配当。",
+    howto3_title:"入金して続ける",
+    howto3_desc: "無料クレジット終了後は1,000/5,000/10,000 SATSを入金。ウォレットが自動起動します。",
+    howto4_title:"ランキングに刻め",
+    howto4_desc: "大きな勝利でランキングに載れる。⚡⚡⚡ ジャックポット（×50）で永遠に名を残せ！",
+    paytable_title:"— 配当表 —", any2:"任意の2つ揃い", any2note:"ペア",
+    modal_title:"⚡ 入金するには支払いを", tap_qr:"QRタップでウォレットを開く",
+    modal_waiting:"⏳ 支払いを確認中...", btn_cancel:"キャンセル",
+    win_p:"名前を入力してランキングに載せよう！",
+    engrave:"⚡ 名前を刻む", skip:"スキップ",
+    wallet_title:"ライトニングウォレット", wallet_deposit:"＋ 入金",
+    lb_note:"勝ち続けて永遠に名前を刻め ⚡"
+  },
+  ko: {
+    subtitle: "SATS를 걸어라 · SATS를 따라",
+    balance: "잔액", won: "이번 획득", bet: "베팅", spin: "스핀 ⚡",
+    free_title: "🎁 웰컴 보너스: 10,000 SATS 무료!",
+    free_desc: "첫 플레이는 무료. 다 쓰면 입금하고 계속하자.",
+    dep_label: "⚡ 계속하려면 SATS 입금",
+    msg_ready: "— 스핀 준비 완료 —",
+    msg_spinning: "⚡ 스피닝...",
+    msg_win: "당첨! +", msg_lose: "꽝 — 다시 도전",
+    msg_jackpot: "⚡ 잭팟! +", msg_refill: "무료 크레딧 소진 — 입금하고 계속",
+    share: "X / Twitter에 공유",
+    dep_more: "SATS 추가 입금",
+    keep_spinning: "계속 돌리기",
+    stat_spins:"스핀", stat_wins:"당첨", stat_best:"최고",
+    howto_title: "📖 플레이 방법",
+    howto1_title:"첫 무료 플레이",
+    howto1_desc: "10,000 SATS 무료 크레딧으로 시작. 입금 불필요! SPIN만 누르면 돼!",
+    howto2_title:"베팅 & 스핀",
+    howto2_desc: "베팅금액(10~10,000 sats)을 정하고 스핀. 3개 맞추면 당첨. 2개만 맞춰도 ×1.5 지급!",
+    howto3_title:"계속하려면 입금",
+    howto3_desc: "무료 크레딧 소진 후 1,000/5,000/10,000 SATS 라이트닝으로 입금. 지갑이 자동 실행됩니다.",
+    howto4_title:"리더보드에 올라라",
+    howto4_desc: "큰 당첨으로 리더보드에 등재. ⚡⚡⚡ 잭팟(×50)으로 영원히 이름을 새겨라!",
+    paytable_title:"— 배당표 —", any2:"임의 2개 일치", any2note:"페어",
+    modal_title:"⚡ 입금 결제", tap_qr:"QR 탭하여 지갑 열기",
+    modal_waiting:"⏳ 결제 대기 중...", btn_cancel:"취소",
+    win_p:"이름을 입력하고 리더보드에 올라라!",
+    engrave:"⚡ 내 이름 새기기", skip:"건너뛰기",
+    wallet_title:"라이트닝 지갑", wallet_deposit:"＋ 입금",
+    lb_note:"크게 이겨서 여기에 이름을 새기자 ⚡"
+  }
+};
+
+let lang = "en";
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (I18N[l] && I18N[l][key] !== undefined) el.innerHTML = I18N[l][key];
+  });
+}
+
+/* ============================================================
+   SYMBOLS & WEIGHTS
+============================================================ */
+const SYMBOLS   =['⚡','₿','🔑','💎','🌕','🔥'];
+const WEIGHTS   =[2,   5,   8,  10,  15,  20];
+const MULTS     = { '⚡⚡⚡':50, '₿₿₿':20, '🔑🔑🔑':10, '💎💎💎':8, '🌕🌕🌕':5, '🔥🔥🔥':3 };
+const BET_LEVELS =[10, 50, 100, 250, 500, 1000, 2500, 5000, 10000];
+
+/* ============================================================
+   STATE
+============================================================ */
+let balance    = FREE_CREDITS;
+let sessionWon = 0;
+let spins      = 0;
+let wins       = 0;
+let biggestWin = 0;
+let betIdx     = 0;
+let isSpinning = false;
+let finalSyms  =['₿','₿','₿'];
+let pendingWin = 0;
+let lastWin    = 0;
+let pollTimer  = null;
+let curHash    = "";
+let pendingDepositAmount = 0; // 追加: 入金待機中の金額
+
+/* ============================================================
+   INIT
+============================================================ */
+window.onload = () => {
+  buildAllReels();
+  updateUI();
+  fetchLeaderboard();
+  
+  const userLang = (navigator.language || navigator.userLanguage).substring(0, 2);
+  const defaultLang =['ja', 'ko'].includes(userLang) ? userLang : 'en';
+  document.querySelector('.lang-select').value = defaultLang;
+  setLang(defaultLang);
+  
+  spawnSparkles();
+};
+
+function spawnSparkles() {
+  const icons =['✨','💖','⚡','💎','🌟','💫'];
+  for (let i = 0; i < 8; i++) {
+    const el = document.createElement('div');
+    el.className = 'sparkle';
+    el.textContent = icons[Math.floor(Math.random() * icons.length)];
+    el.style.left = (5 + Math.random() * 90) + 'vw';
+    el.style.bottom = (Math.random() * 30) + 'vh';
+    el.style.animationDuration = (6 + Math.random() * 10) + 's';
+    el.style.animationDelay = (Math.random() * 8) + 's';
+    el.style.opacity = '0';
+    document.body.appendChild(el);
+  }
+}
+
+function weightedRand() {
+  const total = WEIGHTS.reduce((a,b)=>a+b, 0);
+  let r = Math.random() * total;
+  for (let i=0; i<SYMBOLS.length; i++) { r -= WEIGHTS[i]; if (r <= 0) return SYMBOLS[i]; }
+  return SYMBOLS[SYMBOLS.length-1];
+}
+
+function buildReel(id, landSym) {
+  const inner = document.getElementById('inner' + id);
+  inner.innerHTML = '';
+  const strip =[];
+  for (let i=0; i<16; i++) strip.push(SYMBOLS[Math.floor(Math.random()*SYMBOLS.length)]);
+  strip.push(landSym);
+  strip.forEach(s => {
+    const d = document.createElement('div');
+    d.className = 'reel-sym'; d.textContent = s;
+    inner.appendChild(d);
+  });
+  inner.style.transition = 'none';
+  inner.style.transform  = 'translateY(0)';
+}
+
+function buildAllReels() {
+  for (let i=0; i<3; i++) buildReel(i, finalSyms[i]);
+}
+
+function changeBet(dir) {
+  if (isSpinning) return;
+  betIdx = Math.max(0, Math.min(BET_LEVELS.length-1, betIdx+dir));
+  document.getElementById('bet-display').textContent = BET_LEVELS[betIdx].toLocaleString();
+}
+function setMaxBet() {
+  if (isSpinning) return;
+  betIdx = BET_LEVELS.length-1;
+  document.getElementById('bet-display').textContent = BET_LEVELS[betIdx].toLocaleString();
+}
+
+function updateUI() {
+  document.getElementById('balance-display').innerHTML = balance.toLocaleString() + ' <sup>SATS</sup>';
+  document.getElementById('won-display').innerHTML     = sessionWon.toLocaleString() + ' <sup>SATS</sup>';
+  document.getElementById('stat-spins').textContent   = spins;
+  document.getElementById('stat-wins').textContent    = wins;
+  document.getElementById('stat-best').textContent    = biggestWin > 0 ? biggestWin.toLocaleString() : '—';
+  // Wallet progress bar
+  const maxBal = FREE_CREDITS * 2;
+  const pct = Math.min(100, (balance / maxBal) * 100);
+  const bar = document.getElementById('wallet-progress-bar');
+  if (bar) bar.style.width = Math.max(2, pct) + '%';
+  // Wallet tip text
+  const tip = document.getElementById('wallet-tip');
+  if (tip) {
+    if (balance <= 0) {
+      tip.textContent = '⚠️ Balance empty — deposit to keep spinning!';
+      tip.style.color = 'var(--red)';
+    } else if (balance < 500) {
+      tip.textContent = '⚡ Low balance — deposit more sats!';
+      tip.style.color = 'var(--orange)';
+    } else if (sessionWon > 0) {
+      tip.textContent = `🎉 You've won ${sessionWon.toLocaleString()} sats this session!`;
+      tip.style.color = 'var(--green)';
+    } else {
+      tip.textContent = '🎁 First 10,000 SATS are FREE — just hit SPIN!';
+      tip.style.color = 'var(--purple)';
+    }
+  }
+}
+
+function setMsg(text, cls) {
+  const el = document.getElementById('result-msg');
+  el.textContent = text;
+  el.className   = 'result-msg' + (cls ? ' '+cls : '');
+}
+
+async function spin() {
+  const bet = BET_LEVELS[betIdx];
+  if (balance < bet) {
+    showDepositSectionAndScroll();
+    setMsg(I18N[lang].msg_refill, 'lose');
+    return;
+  }
+  if (isSpinning) return;
+
+  isSpinning = true;
+  pendingWin = 0; 
+  document.getElementById('spin-btn').disabled = true;
+  document.getElementById('post-action-area').style.display = 'none'; 
+  setMsg(I18N[lang].msg_spinning, '');
+
+  balance -= bet;
+  finalSyms =[weightedRand(), weightedRand(), weightedRand()];
+  for (let i=0; i<3; i++) buildReel(i, finalSyms[i]);
+  updateUI();
+
+  await new Promise(r => setTimeout(r, 60));
+
+  const delays =[800, 1150, 1520];
+  for (let i=0; i<3; i++) {
+    const inner = document.getElementById('inner'+i);
+    const count = inner.children.length;
+    setTimeout(() => {
+      inner.style.transition = `transform ${.65 + i*.15}s cubic-bezier(0.18, 0.95, 0.1, 1)`;
+      inner.style.transform  = `translateY(${-(count-1)*88}px)`;
+    }, i === 0 ? 0 : delays[i] - delays[0]);
+  }
+
+  await new Promise(r => setTimeout(r, delays[2] + 400));
+  resolveResult(bet);
+}
+
+function resolveResult(bet) {
+  const key  = finalSyms.join('');
+  let mult   = 0;
+  if (MULTS[key]) {
+    mult = MULTS[key];
+  } else if (finalSyms[0]===finalSyms[1] || finalSyms[1]===finalSyms[2] || finalSyms[0]===finalSyms[2]) {
+    mult = 1.5;
+  }
+
+  const winAmt = Math.floor(bet * mult);
+  spins++;
+
+  if (winAmt > 0) {
+    wins++;
+    balance    += winAmt;
+    sessionWon += winAmt;
+    pendingWin  = winAmt;
+    lastWin     = winAmt;
+    if (winAmt > biggestWin) biggestWin = winAmt;
+
+    for (let i=0; i<3; i++) {
+      const r = document.getElementById('reel'+i);
+      r.classList.remove('is-winner'); void r.offsetWidth; r.classList.add('is-winner');
+    }
+    spawnConfetti();
+
+    const isJackpot = (MULTS[key] === 50);
+    const isBigWin  = (MULTS[key] >= 8);
+
+    if (isJackpot) {
+      setMsg(I18N[lang].msg_jackpot + winAmt.toLocaleString() + ' SATS ⚡', 'jackpot');
+    } else {
+      setMsg(I18N[lang].msg_win + winAmt.toLocaleString() + ' SATS', 'win');
+    }
+
+    if (isBigWin || isJackpot) {
+      const title = isJackpot ? '⚡ JACKPOT! ⚡' : (MULTS[key] >= 20 ? '₿ BIG WIN! ₿' : '💎 WIN! 💎');
+      document.getElementById('win-title').textContent  = title;
+      document.getElementById('win-amount-disp').textContent = '+' + winAmt.toLocaleString() + ' SATS';
+      document.getElementById('win-overlay').classList.add('open');
+    }
+  } else {
+    setMsg(I18N[lang].msg_lose, 'lose');
+  }
+
+  if (balance <= 0) {
+    showDepositSectionAndScroll();
+    setMsg(I18N[lang].msg_refill, 'lose');
+  }
+
+  updateUI();
+  isSpinning = false;
+  document.getElementById('spin-btn').disabled = false;
+
+  const quotes = HYPE_QUOTES[lang];
+  document.getElementById('main-hype-quote').textContent = '"' + quotes[Math.floor(Math.random() * quotes.length)] + '"';
+  document.getElementById('post-action-area').style.display = 'flex';
+}
+
+/* ============================================================
+   DEPOSIT FLOW (The Fiat Burner Style)
+============================================================ */
+function showDepositSection() {
+  document.getElementById('free-banner').style.display = 'none';
+  document.getElementById('deposit-section').classList.add('visible');
+}
+
+function showDepositSectionAndScroll() {
+  showDepositSection();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function openDeposit(amount) {
+  if (isSpinning) return;
+  pendingDepositAmount = amount; // 保存
+  document.getElementById('modal-invoice').classList.add('open');
+  document.getElementById('qr-img').src  = '';
+  document.getElementById('modal-inv-text').value = 'Generating invoice...';
+
+  // 🔥 Fiat Burner と全く同じ通信とエラーハンドリングに修正！
+  fetch(LNBITS_URL, {
+    method: 'POST',
+    headers: { 'X-Api-Key': LNBITS_API_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ out: false, amount: amount, memo: `⚡ Lightning Slot — ${amount} sats deposit` })
+  })
+  .then(res => {
+    if (!res.ok) throw new Error("Network response was not ok");
+    return res.json();
+  })
+  .then(data => {
+    curHash = data.payment_hash;
+    const inv = data.payment_request;
+    const lnUrl = `lightning:${inv}`;
+    
+    document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${lnUrl}`;
+    document.getElementById('ln-link').href = lnUrl;
+    document.getElementById('modal-inv-text').value = inv;
+    
+    // Fiat Burnerと全く同じく強制的にWallet呼び出し
+    setTimeout(() => { window.location.href = lnUrl; }, 800);
+    
+    startPolling();
+  })
+  .catch(err => {
+    // ⚠️ もしサーバーエラーなら、ここでデモ処理に逃げずにしっかりエラーを出す
+    alert("Invoice generation failed. API server might be down.");
+    location.reload();
+  });
+}
+
+function startPolling() {
+  if (pollTimer) clearInterval(pollTimer);
+  pollTimer = setInterval(() => {
+    fetch(`${LNBITS_URL}/${curHash}`, { method: "GET", headers: { 'X-Api-Key': LNBITS_API_KEY } })
+    .then(r => r.json())
+    .then(data => {
+      if (data.paid) {
+        clearInterval(pollTimer);
+        closeModal();
+        balance += pendingDepositAmount;
+        updateUI();
+        setMsg(`+${pendingDepositAmount.toLocaleString()} SATS DEPOSITED! ⚡`, 'win');
+      }
+    }).catch(console.error);
+  }, 3000);
+}
+
+function verifyPayment() {
+  if (!curHash) return;
+  fetch(`${LNBITS_URL}/${curHash}`, { method: "GET", headers: { "X-Api-Key": LNBITS_API_KEY } })
+  .then(res => res.json())
+  .then(data => {
+    if (data.paid) {
+      if (pollTimer) clearInterval(pollTimer);
+      closeModal();
+      balance += pendingDepositAmount;
+      updateUI();
+      setMsg(`+${pendingDepositAmount.toLocaleString()} SATS DEPOSITED! ⚡`, 'win');
+    } else {
+      alert("Payment not received yet. Keep waiting!");
+    }
+  }).catch(console.error);
+}
+
+function closeModal() {
+  if (pollTimer) clearInterval(pollTimer);
+  document.getElementById('modal-invoice').classList.remove('open');
+}
+
+function submitWin() {
+  let name = document.getElementById('win-name').value.trim() || 'Anon Pleb';
+  const btn = document.getElementById('btn-win-submit');
+  btn.textContent = 'SAVING...'; btn.disabled = true;
+
+  const url = `${GAS_URL}?action=record&name=${encodeURIComponent(name)}&sats=${pendingWin}&fiat=0`;
+  fetch(url)
+    .then(() => { fetchLeaderboard(); showWinActions(); })
+    .catch(() => showWinActions());
+}
+
+const KAWAII_SHARE = {
+  jackpot: {
+    emoji: '⚡💥⚡',
+    en: 'JACKPOT!! The Lightning gods smiled on you today 😭⚡ Your fiat-having friends need to see this!',
+    ja: 'ジャックポット！！稲妻の神様があなたに微笑んだ 😭⚡ フィアット持ちの友達に見せてあげて！',
+    ko: '잭팟!! 번개의 신이 오늘 당신에게 미소 지었다 😭⚡ 친구들에게 자랑하자!'
+  },
+  bigwin: {
+    emoji: '🎰💎🎰',
+    en: 'Big win! You are officially a sats stacker 💎 Share your glory and make your plebs jealous 👀',
+    ja: 'ビッグウィン！あなたは公式にSatsスタッカーだ 💎 友達に自慢しちゃおう 👀',
+    ko: '빅윈! 당신은 공식 sats 스태커 💎 친구들을 부러워하게 만들자 👀'
+  },
+  normal: {
+    emoji: '🎰✨💖',
+    en: 'You won! The Lightning Network is your playground 💖 Tell the world you stack sats like a chad!',
+    ja: '勝った！ライトニングネットワークはあなたの遊び場 💖 Satsを積み上げているってみんなに教えよう！',
+    ko: '당첨! 라이트닝 네트워크는 당신의 놀이터 💖 sats 쌓는 사람임을 세상에 알리자!'
+  }
+};
+
+function showWinActions() {
+  document.getElementById('win-form-area').style.display = 'none';
+  document.getElementById('win-action-area').style.display = 'block';
+  
+  // Set kawaii share message based on win type
+  const isJackpot = lastWin >= BET_LEVELS[betIdx] * 50;
+  const isBigWin  = lastWin >= BET_LEVELS[betIdx] * 8;
+  const kType = isJackpot ? 'jackpot' : isBigWin ? 'bigwin' : 'normal';
+  const kMsg = KAWAII_SHARE[kType];
+  
+  const emojiEl = document.getElementById('win-share-emoji');
+  const textEl  = document.getElementById('win-share-text');
+  if (emojiEl) emojiEl.textContent = kMsg.emoji;
+  if (textEl)  textEl.textContent  = kMsg[lang] || kMsg.en;
+}
+
+function closeWinOverlayAndSpin() {
+  closeWinOverlay();
+}
+
+function closeWinOverlay() {
+  document.getElementById('win-overlay').classList.remove('open');
+  document.getElementById('win-name').value = '';
+  const btn = document.getElementById('btn-win-submit');
+  btn.textContent = I18N[lang].engrave;
+  btn.disabled = false;
+  document.getElementById('win-form-area').style.display = 'block';
+  document.getElementById('win-action-area').style.display = 'none';
+}
+
+function fetchLeaderboard() {
+  fetch(`${GAS_URL}?action=getStats`)
+  .then(r => r.json())
+  .then(data => renderLeaderboard(data.leaderboard ||[]))
+  .catch(() => renderLeaderboard([]));
+}
+
+function renderLeaderboard(board) {
+  const el = document.getElementById('lb-content');
+  if (!board.length) {
+    el.innerHTML = '<div style="color:var(--muted);font-size:11px;text-align:center;padding:14px 0">⚡ No winners yet — be the first! 🏆</div>';
+    return;
+  }
+  const top5 = board.slice(0, 5);
+  const rankEmoji = ['👑','🥈','🥉','4️⃣','5️⃣'];
+  el.innerHTML = top5.map((u, i) => `
+    <div class="lb-row ${i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':''}">
+      <span class="lb-rank">${rankEmoji[i]}</span>
+      <span class="lb-name">${escHtml(u.name)}</span>
+      <span class="lb-sats">${Number(u.sats).toLocaleString()} sats</span>
+    </div>`).join('');
+}
+
+function escHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function shareToX() {
+  const sym   = finalSyms.join(' ');
+  const combo = finalSyms.join('');
+  const mult  = MULTS[combo] || (pendingWin > 0 ? 1.5 : 0);
+
+  // Kawaii share messages per language and win type
+  const isJackpot = mult === 50;
+  let text = "";
+
+  if (pendingWin > 0) {
+    if (isJackpot) {
+      if (lang === 'ja') {
+        text = `⚡🎰 JACKPOT！！${lastWin.toLocaleString()} SATS ゲット！\n[ ${sym} ] ×${mult} 🔥\n\nライトニングスロットで稲妻が走った…これ本物？😭\n初回10,000 SATS無料でプレイできるよ！👇\n#Bitcoin #LightningNetwork #StackSats`;
+      } else if (lang === 'ko') {
+        text = `⚡🎰 잭팟!! ${lastWin.toLocaleString()} SATS 획득!\n[ ${sym} ] ×${mult} 🔥\n\n번개가 쳤다... 이게 실화냐?? 😭\n첫 10,000 SATS 무료! 지금 바로 도전! 👇\n#Bitcoin #라이트닝네트워크 #StackSats`;
+      } else {
+        text = `⚡🎰 JACKPOT!! Won ${lastWin.toLocaleString()} SATS!!\n[ ${sym} ] ×${mult} 🔥\n\nThe Lightning gods smiled on me today… is this real life?? 😭\nFirst 10,000 sats FREE — come get rekt 👇\n#Bitcoin #LightningNetwork #StackSats`;
+      }
+    } else {
+      if (lang === 'ja') {
+        text = `⚡🎰 Lightning Slotで ${lastWin.toLocaleString()} SATS 獲得！\n[ ${sym} ] ×${mult} ✨\n\nSatsを積み上げるのって最高すぎる💖\n君も初回10,000 SATS無料で試してみて！👇\n#Bitcoin #LightningNetwork #Sats`;
+      } else if (lang === 'ko') {
+        text = `⚡🎰 Lightning Slot에서 ${lastWin.toLocaleString()} SATS 획득!\n[ ${sym} ] ×${mult} ✨\n\nSats 쌓는 게 이렇게 짜릿할 줄이야 💖\n첫 10,000 SATS 무료! 같이 해보자 👇\n#Bitcoin #라이트닝네트워크`;
+      } else {
+        text = `⚡🎰 Just won ${lastWin.toLocaleString()} SATS on Lightning Slot!\n[ ${sym} ] ×${mult} ✨\n\nStacking sats has never been this fun 💖\nFirst 10,000 sats are FREE — try it! 👇\n#Bitcoin #LightningNetwork #StackSats`;
+      }
+    }
+  } else {
+    if (lang === 'ja') {
+      text = `⚡🎰 Lightning Slotを回してるよ！\n[ ${sym} ]\n\n負けても懲りない…なぜなら初回10,000 SATS無料だから！🎁\n君も試してみて👇\n#Bitcoin #LightningNetwork`;
+    } else if (lang === 'ko') {
+      text = `⚡🎰 Lightning Slot 돌리는 중!\n[ ${sym} ]\n\n져도 괜찮아... 왜냐면 처음 10,000 SATS는 무료니까! 🎁\n같이 해보자 👇\n#Bitcoin #라이트닝네트워크`;
+    } else {
+      text = `⚡🎰 Spinning Lightning Slot rn!\n[ ${sym} ]\n\nLost? It's fine — first 10,000 sats are FREE anyway 🎁\nCome spin with me! 👇\n#Bitcoin #LightningNetwork`;
+    }
+  }
+
+  const url = encodeURIComponent("https://ck121212195.github.io/Lightning-Slot/");
+  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${url}`, '_blank');
+}
+
+function spawnConfetti() {
+  const colors =['#F7A800','#FF6EB4','#C084FC','#2EFF8A','#00E5FF','#FFD700'];
+  for (let i=0; i<36; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.left       = (10 + Math.random()*80) + 'vw';
+    el.style.top        = (10 + Math.random()*30) + 'vh';
+    el.style.background = colors[Math.floor(Math.random()*colors.length)];
+    el.style.animationDelay = (Math.random() * .6) + 's';
+    el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 2200);
+  }
+}
+
+</script>
+</body>
+</html>
