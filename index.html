@@ -5,13 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>⚡ LIGHTNING SLOT ⚡</title>
 
+  <!-- OGP画像が正しく表示されるようにメタデータを強化 -->
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="https://ck121212195.github.io/Lightning-Slot/">
   <meta property="og:site_name"   content="⚡ LIGHTNING SLOT">
   <meta property="og:title"       content="⚡ LIGHTNING SLOT — Bet Sats. Win Sats.">
   <meta property="og:description" content="ビットコインで遊ぶスロットマシン。初回10,000 SATS無料プレイ！Lightning Networkで勝ったSatsをゲット。 #Bitcoin">
   <meta property="og:image"       content="https://ck121212195.github.io/Lightning-Slot/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type"  content="image/png">
+  
   <meta name="twitter:card"       content="summary_large_image">
+  <meta name="twitter:domain"     content="ck121212195.github.io">
+  <meta name="twitter:url"        content="https://ck121212195.github.io/Lightning-Slot/">
   <meta name="twitter:title"      content="⚡ LIGHTNING SLOT — Bet Sats. Win Sats.">
   <meta name="twitter:description" content="初回10,000 SATS無料！スロットを回してSatsを稼げ。 #Bitcoin #LightningNetwork">
   <meta name="twitter:image"      content="https://ck121212195.github.io/Lightning-Slot/og-image.png">
@@ -369,7 +376,7 @@
     .btn-modal-close:hover { border-color: var(--border-hi); color: var(--text); }
 
     /* ============================================================
-       WIN OVERLAY
+       WIN & GAME OVER OVERLAY
     ============================================================ */
     .win-overlay {
       display: none; position: fixed; inset: 0;
@@ -851,7 +858,6 @@
     </div>
   </div>
 
-
 </div>
 
 <!-- ============================================================
@@ -874,7 +880,6 @@
     <textarea class="modal-inv" id="modal-inv-text" readonly onclick="this.select()"></textarea>
     <div class="modal-waiting" data-i18n="modal_waiting">⏳ Waiting for payment...</div>
     
-    <!-- 追加: Fiat Burner にあった手動確認ボタン -->
     <button class="btn-win-submit" style="width:100%; margin-bottom:10px; font-size:11px;" onclick="verifyPayment()">VERIFY PAYMENT</button>
     <button class="btn-modal-close" onclick="closeModal()" data-i18n="btn_cancel">CANCEL</button>
   </div>
@@ -908,9 +913,28 @@
       </div>
       <button class="btn-win-submit" style="width:100%; margin-bottom:0;" onclick="closeWinOverlayAndSpin()">🎰 <span data-i18n="keep_spinning">KEEP SPINNING</span></button>
     </div>
-
   </div>
 </div>
+
+<!-- ============================================================
+     GAME OVER OVERLAY (残高0時のランキング表示)
+============================================================ -->
+<div class="win-overlay" id="gameover-overlay">
+  <div class="win-box" style="border-color: var(--red); box-shadow: 0 0 60px rgba(255,69,101,.2);">
+    <h2 style="background: linear-gradient(90deg, var(--red), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">GAME OVER</h2>
+    <div style="font-size:10px; color:var(--muted); margin-top:8px;" data-i18n="go_sub">CREDITS REACHED 0</div>
+    
+    <div class="section-title" style="margin-top: 24px;" data-i18n="go_top3">🏆 TOP 3 RANKING</div>
+    <div id="go-lb-content" style="margin-bottom: 24px;">
+      <div style="color:var(--muted);font-size:11px;text-align:center;padding:12px 0">⚡ Loading...</div>
+    </div>
+    
+    <button class="btn-win-submit" style="background: linear-gradient(135deg, var(--gold), var(--orange)); color:#000;" onclick="closeGameOverAndDeposit()">
+      <span data-i18n="go_btn">⚡ DEPOSIT TO CONTINUE</span>
+    </button>
+  </div>
+</div>
+
 
 <!-- ============================================================
      JAVASCRIPT
@@ -991,7 +1015,8 @@ const I18N = {
     engrave:"⚡ ENGRAVE MY NAME", skip:"Skip",
     wallet_title:"MY LIGHTNING WALLET", wallet_deposit:"＋ DEPOSIT",
     lb_note:"Win big to engrave your name here forever ⚡",
-    odds_sub:"SYMBOL DRAW PROBABILITY", odds_winrate:"TOTAL WIN RATE", odds_house:"HOUSE EDGE", odds_exp:"EXP PER 100 BET", odds_breakdown:"WIN OUTCOME BREAKDOWN", odds_combo:"COMBO", odds_house_note:"House has edge. Good luck — stack those sats! 🎰"
+    odds_sub:"SYMBOL DRAW PROBABILITY", odds_winrate:"TOTAL WIN RATE", odds_house:"HOUSE EDGE", odds_exp:"EXP PER 100 BET", odds_breakdown:"WIN OUTCOME BREAKDOWN", odds_combo:"COMBO", odds_house_note:"House has edge. Good luck — stack those sats! 🎰",
+    go_sub: "CREDITS REACHED 0", go_top3: "🏆 TOP 3 RANKING", go_btn: "⚡ DEPOSIT TO CONTINUE"
   },
   ja: {
     subtitle: "SATSを賭けろ · SATSを勝ち取れ",
@@ -1023,7 +1048,8 @@ const I18N = {
     engrave:"⚡ 名前を刻む", skip:"スキップ",
     wallet_title:"ライトニングウォレット", wallet_deposit:"＋ 入金",
     lb_note:"勝ち続けて永遠に名前を刻め ⚡",
-    odds_sub:"シンボル出現確率", odds_winrate:"総当選率", odds_house:"ハウスエッジ", odds_exp:"100BETあたり期待値", odds_breakdown:"当選内訳", odds_combo:"組み合わせ", odds_house_note:"ハウスに優位性あり。頑張ってSatsを積み上げろ！🎰"
+    odds_sub:"シンボル出現確率", odds_winrate:"総当選率", odds_house:"ハウスエッジ", odds_exp:"100BETあたり期待値", odds_breakdown:"当選内訳", odds_combo:"組み合わせ", odds_house_note:"ハウスに優位性あり。頑張ってSatsを積み上げろ！🎰",
+    go_sub: "残高が0になりました", go_top3: "🏆 トップ3 ランキング", go_btn: "⚡ 入金して続ける"
   },
   ko: {
     subtitle: "SATS를 걸어라 · SATS를 따라",
@@ -1055,7 +1081,8 @@ const I18N = {
     engrave:"⚡ 내 이름 새기기", skip:"건너뛰기",
     wallet_title:"라이트닝 지갑", wallet_deposit:"＋ 입금",
     lb_note:"크게 이겨서 여기에 이름을 새기자 ⚡",
-    odds_sub:"심볼 출현 확률", odds_winrate:"총 당첨율", odds_house:"하우스 엣지", odds_exp:"100BET당 기댓값", odds_breakdown:"당첨 내역", odds_combo:"조합", odds_house_note:"하우스가 유리합니다. 행운을 빌어요 — sats 쌓아라! 🎰"
+    odds_sub:"심볼 출현 확률", odds_winrate:"총 당첨율", odds_house:"하우스 엣지", odds_exp:"100BET당 기댓값", odds_breakdown:"당첨 내역", odds_combo:"조합", odds_house_note:"하우스가 유리합니다. 행운을 빌어요 — sats 쌓아라! 🎰",
+    go_sub: "잔액이 0이 되었습니다", go_top3: "🏆 톱 3 랭킹", go_btn: "⚡ 입금하고 계속하기"
   }
 };
 
@@ -1092,7 +1119,7 @@ let pendingWin = 0;
 let lastWin    = 0;
 let pollTimer  = null;
 let curHash    = "";
-let pendingDepositAmount = 0; // 追加: 入金待機中の金額
+let pendingDepositAmount = 0;
 
 /* ============================================================
    INIT
@@ -1164,19 +1191,20 @@ function setMaxBet() {
 }
 
 function updateUI() {
-  balance    = Math.floor(balance);
-  sessionWon = Math.floor(sessionWon);
+  // 端数が出ないように Math.round で完全に整数化
+  balance    = Math.round(balance);
+  sessionWon = Math.round(sessionWon);
   document.getElementById('balance-display').innerHTML = balance.toLocaleString() + ' <sup>SATS</sup>';
   document.getElementById('won-display').innerHTML     = sessionWon.toLocaleString() + ' <sup>SATS</sup>';
   document.getElementById('stat-spins').textContent   = spins;
   document.getElementById('stat-wins').textContent    = wins;
   document.getElementById('stat-best').textContent    = biggestWin > 0 ? biggestWin.toLocaleString() : '—';
-  // Wallet progress bar
+  
   const maxBal = FREE_CREDITS * 2;
   const pct = Math.min(100, (balance / maxBal) * 100);
   const bar = document.getElementById('wallet-progress-bar');
   if (bar) bar.style.width = Math.max(2, pct) + '%';
-  // Wallet tip text
+  
   const tip = document.getElementById('wallet-tip');
   if (tip) {
     if (balance <= 0) {
@@ -1204,8 +1232,12 @@ function setMsg(text, cls) {
 async function spin() {
   const bet = BET_LEVELS[betIdx];
   if (balance < bet) {
-    showDepositSectionAndScroll();
-    setMsg(I18N[lang].msg_refill, 'lose');
+    if (balance <= 0) {
+      showGameOver();
+    } else {
+      showDepositSectionAndScroll();
+      setMsg(I18N[lang].msg_refill, 'lose');
+    }
     return;
   }
   if (isSpinning) return;
@@ -1246,7 +1278,8 @@ function resolveResult(bet) {
     mult = PAIR_MULT;
   }
 
-  const winAmt = Math.floor(bet * mult);
+  // Math.round で計算誤差から生じる端数を除去
+  const winAmt = Math.round(bet * mult);
   spins++;
 
   if (winAmt > 0) {
@@ -1285,8 +1318,7 @@ function resolveResult(bet) {
   }
 
   if (balance <= 0) {
-    showDepositSectionAndScroll();
-    setMsg(I18N[lang].msg_refill, 'lose');
+    showGameOver(); // 残高0でGame Over表示
   }
 
   updateUI();
@@ -1296,6 +1328,45 @@ function resolveResult(bet) {
   const quotes = HYPE_QUOTES[lang];
   document.getElementById('main-hype-quote').textContent = '"' + quotes[Math.floor(Math.random() * quotes.length)] + '"';
   document.getElementById('post-action-area').style.display = 'flex';
+}
+
+/* ============================================================
+   GAME OVER FLOW
+============================================================ */
+function showGameOver() {
+  document.getElementById('gameover-overlay').classList.add('open');
+  fetchTop3();
+}
+
+function fetchTop3() {
+  const el = document.getElementById('go-lb-content');
+  el.innerHTML = '<div style="color:var(--muted);font-size:11px;text-align:center;padding:12px 0">⚡ Loading...</div>';
+  fetch(`${GAS_URL}?action=getStats`)
+  .then(r => r.json())
+  .then(data => {
+    const board = data.leaderboard ||[];
+    if (!board.length) {
+      el.innerHTML = '<div style="color:var(--muted);font-size:11px;text-align:center;padding:12px 0">No winners yet.</div>';
+      return;
+    }
+    const top3 = board.slice(0, 3);
+    const rankEmoji =['👑','🥈','🥉'];
+    el.innerHTML = top3.map((u, i) => `
+      <div class="lb-row ${i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':''}" style="border-bottom: 1px dashed var(--border); background: ${i===0 ? 'rgba(255,215,0,.05)' : 'transparent'}; border-radius: 8px;">
+        <span class="lb-rank" style="font-size: 16px; width: 28px; text-align: center;">${rankEmoji[i]}</span>
+        <span class="lb-name" style="flex: 1; text-align:left; font-size: 11px;">${escHtml(u.name)}</span>
+        <span class="lb-sats" style="font-family: 'Press Start 2P', monospace; font-size: 9px; color: ${i===0 ? '#FFD700' : 'var(--gold)'};">${Number(u.sats).toLocaleString()} sats</span>
+      </div>`).join('');
+  })
+  .catch(() => {
+    el.innerHTML = '<div style="color:var(--muted);font-size:11px;text-align:center;padding:12px 0">Failed to load ranking.</div>';
+  });
+}
+
+function closeGameOverAndDeposit() {
+  document.getElementById('gameover-overlay').classList.remove('open');
+  showDepositSectionAndScroll();
+  setMsg(I18N[lang].msg_refill, 'lose');
 }
 
 /* ============================================================
@@ -1313,12 +1384,11 @@ function showDepositSectionAndScroll() {
 
 function openDeposit(amount) {
   if (isSpinning) return;
-  pendingDepositAmount = amount; // 保存
+  pendingDepositAmount = amount;
   document.getElementById('modal-invoice').classList.add('open');
   document.getElementById('qr-img').src  = '';
   document.getElementById('modal-inv-text').value = 'Generating invoice...';
 
-  // 🔥 Fiat Burner と全く同じ通信とエラーハンドリングに修正！
   fetch(LNBITS_URL, {
     method: 'POST',
     headers: { 'X-Api-Key': LNBITS_API_KEY, 'Content-Type': 'application/json' },
@@ -1337,13 +1407,10 @@ function openDeposit(amount) {
     document.getElementById('ln-link').href = lnUrl;
     document.getElementById('modal-inv-text').value = inv;
     
-    // Fiat Burnerと全く同じく強制的にWallet呼び出し
     setTimeout(() => { window.location.href = lnUrl; }, 800);
-    
     startPolling();
   })
   .catch(err => {
-    // ⚠️ もしサーバーエラーなら、ここでデモ処理に逃げずにしっかりエラーを出す
     alert("Invoice generation failed. API server might be down.");
     location.reload();
   });
@@ -1403,18 +1470,17 @@ function submitWin() {
     .catch(() => showWinActions());
 }
 
-// レコード保存前にランクをプレビュー表示
 function showRankPreview(winSats) {
   fetch(`${GAS_URL}?action=getStats`)
   .then(r => r.json())
   .then(data => {
-    const board = data.leaderboard || [];
+    const board = data.leaderboard ||[];
     const rank = board.filter(u => Number(u.sats) > winSats).length + 1;
     const banner = document.getElementById('win-rank-banner');
     const text   = document.getElementById('win-rank-text');
     if (!banner || !text) return;
 
-    const rankLabels = { en: ['👑 YOU ARE #1!!', '🥈 YOU ARE #2!', '🥉 YOU ARE #3!'], ja: ['👑 現在1位！！', '🥈 現在2位！', '🥉 現在3位！'], ko: ['👑 현재 1위!!', '🥈 현재 2위!', '🥉 현재 3위!'] };
+    const rankLabels = { en:['👑 YOU ARE #1!!', '🥈 YOU ARE #2!', '🥉 YOU ARE #3!'], ja:['👑 現在1位！！', '🥈 現在2位！', '🥉 現在3位！'], ko:['👑 현재 1위!!', '🥈 현재 2위!', '🥉 현재 3위!'] };
     const topLabels = rankLabels[lang] || rankLabels.en;
 
     let msg = '';
@@ -1458,7 +1524,6 @@ function showWinActions() {
   document.getElementById('win-form-area').style.display = 'none';
   document.getElementById('win-action-area').style.display = 'block';
   
-  // Set kawaii share message based on win type
   const isJackpot = lastWin >= BET_LEVELS[betIdx] * 50;
   const isBigWin  = lastWin >= BET_LEVELS[betIdx] * 8;
   const kType = isJackpot ? 'jackpot' : isBigWin ? 'bigwin' : 'normal';
@@ -1500,7 +1565,7 @@ function renderLeaderboard(board) {
     return;
   }
   const top5 = board.slice(0, 5);
-  const rankEmoji = ['👑','🥈','🥉','4️⃣','5️⃣'];
+  const rankEmoji =['👑','🥈','🥉','4️⃣','5️⃣'];
   el.innerHTML = top5.map((u, i) => `
     <div class="lb-row ${i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':''}">
       <span class="lb-rank">${rankEmoji[i]}</span>
@@ -1518,7 +1583,6 @@ function shareToX() {
   const combo = finalSyms.join('');
   const mult  = MULTS[combo] || (pendingWin > 0 ? PAIR_MULT : 0);
 
-  // Kawaii share messages per language and win type
   const isJackpot = mult === 50;
   let text = "";
 
@@ -1578,8 +1642,7 @@ function buildOddsPanel() {
   const total   = weights.reduce((a,b)=>a+b,0);
   const probs   = weights.map(w => w/total);
 
-  // Symbol probability bars
-  const barColors = ['#FF6200','#F7A800','#C084FC','#00E5FF','#FF6EB4','#FF4565'];
+  const barColors =['#FF6200','#F7A800','#C084FC','#00E5FF','#FF6EB4','#FF4565'];
   const barsEl = document.getElementById('odds-sym-bars');
   if (barsEl) {
     barsEl.innerHTML = syms.map((s,i) => {
@@ -1594,9 +1657,8 @@ function buildOddsPanel() {
     }).join('');
   }
 
-  // Triple combos RTP breakdown
   let totalRtp = 0;
-  const rows = [];
+  const rows =[];
   for (let i=0; i<syms.length; i++) {
     const key = syms[i].repeat(3);
     if (MULTS[key]) {
@@ -1606,7 +1668,7 @@ function buildOddsPanel() {
       rows.push({ sym: key, mult: MULTS[key], prob: p3, contrib });
     }
   }
-  // Pair row
+
   const pairProb = syms.reduce((s,_,i) => s + 3*(probs[i]**2)*(1-probs[i]), 0);
   const pairContrib = pairProb * PAIR_MULT;
   totalRtp += pairContrib;
@@ -1623,7 +1685,6 @@ function buildOddsPanel() {
       </tr>`).join('');
   }
 
-  // Win rate (any win)
   const tripleWinProb = syms.reduce((s,_,i) => s + probs[i]**3, 0);
   const winRate = tripleWinProb + pairProb;
   const houseEdge = 1 - totalRtp;
@@ -1638,7 +1699,6 @@ function buildOddsPanel() {
   const barFill = document.getElementById('odds-rtp-bar');
   if (barFill) barFill.style.width = (totalRtp*100).toFixed(1)+'%';
 }
-
 </script>
 </body>
 </html>
