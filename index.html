@@ -10,7 +10,7 @@
   <meta property="og:url"         content="https://ck121212195.github.io/LNbits_slot2/">
   <meta property="og:site_name"   content="⚡ LIGHTNING SLOT">
   <meta property="og:title"       content="⚡ LIGHTNING SLOT — カワイイ！楽しい！スロットで遊ぼう💖">
-  <meta property="og:description" content="初回10,000 SATS無料で遊べちゃう！可愛いスロットを回してビットコイン(Sats)をゲットしよ✨ #ポイ活">
+  <meta property="og:description" content="初回はお試し10,000クレジットで無料体験！可愛いスロットを回して楽しく遊ぼう✨ #LightningNetwork">
   <meta property="og:image"       content="https://ck121212195.github.io/LNbits_slot2/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -20,7 +20,7 @@
   <meta name="twitter:domain"     content="ck121212195.github.io">
   <meta name="twitter:url"        content="https://ck121212195.github.io/LNbits_slot2/">
   <meta name="twitter:title"      content="⚡ LIGHTNING SLOT — カワイイ！楽しい！スロットで遊ぼう💖">
-  <meta name="twitter:description" content="初回10,000 SATS無料！スロットを回して楽しくSatsをゲットしよ🥰 #ポイ活">
+  <meta name="twitter:description" content="初回はお試し10,000クレジットで無料体験！スロットを回して楽しく遊ぼう🥰 #LightningNetwork">
   <meta name="twitter:image"      content="https://ck121212195.github.io/LNbits_slot2/og-image.png">
 
   <link rel="icon"             type="image/png" href="favicon.png" sizes="32x32">
@@ -682,14 +682,14 @@
     <div class="wallet-progress-wrap">
       <div class="wallet-progress-bar" id="wallet-progress-bar"></div>
     </div>
-    <div class="wallet-tip" id="wallet-tip">🎁 First 10,000 SATS are FREE — just hit SPIN!</div>
+    <div class="wallet-tip" id="wallet-tip">🎁 First 10,000 credits are FREE to play — just hit SPIN!</div>
   </div>
 
   <!-- Free credits banner / Deposit section -->
   <div id="free-banner" class="free-banner">
     <div class="icon">🎁</div>
     <div>
-      <strong data-i18n="free_title">WELCOME BONUS: 10,000 SATS FREE!</strong>
+      <strong data-i18n="free_title">WELCOME BONUS: 10,000 FREE CREDITS!</strong>
       <span data-i18n="free_desc">First play is on the house. Deposit to keep winning.</span>
     </div>
   </div>
@@ -759,14 +759,14 @@
         <div class="howto-num">01</div>
         <div class="howto-text">
           <strong data-i18n="howto1_title">FREE FIRST PLAY</strong>
-          <p data-i18n="howto1_desc">You start with 10,000 FREE SATS. No deposit needed. Just hit SPIN!</p>
+          <p data-i18n="howto1_desc">You start with 10,000 FREE CREDITS for trial. No deposit needed. Just hit SPIN!</p>
         </div>
       </div>
       <div class="howto-step">
         <div class="howto-num">02</div>
         <div class="howto-text">
           <strong data-i18n="howto2_title">BET &amp; SPIN</strong>
-          <p data-i18n="howto2_desc">Set your bet (10–10,000 sats) and spin. Match 3 symbols to win. Even 2 matching symbols returns ×1!</p>
+          <p data-i18n="howto2_desc">Set your bet and spin. Match 3 symbols to win. Even 2 matching symbols returns ×1!</p>
         </div>
       </div>
       <div class="howto-step">
@@ -958,14 +958,13 @@ const GAS_URL        = "https://script.google.com/macros/s/AKfycbw2zH2M6fE9_iNc8
 const FREE_CREDITS   = 10000;
 
 /* ============================================================
-   HYPE QUOTES (可愛いセリフへ一新🎀)
+   HYPE QUOTES (可愛いお試しプレイ推奨セリフ🎀)
 ============================================================ */
 const HYPE_QUOTES = {
   en:[
     "Next spin might be a HUGE win! So exciting 💖",
     "Match the cute symbols! 🎀",
-    "Earn sats easily in your free time 🥰",
-    "First 10,000 SATS are totally free! Spin it ✨",
+    "First 10,000 credits are totally free to play! Spin it ✨",
     "Let's aim for the sparkly Jackpot! 🦄",
     "Bitcoin is easy and fun! Let's play 💕",
     "Yay! Good things are coming? 🥺"
@@ -973,8 +972,7 @@ const HYPE_QUOTES = {
   ja:[
     "つぎは大当たりが出ちゃうかも？わくわく💖",
     "可愛いシンボルをそろえてね🎀",
-    "スキマ時間でサクッとSatsをもらっちゃお🥰",
-    "初回10,000SATSは無料！いっぱい回してね✨",
+    "初回10,000クレジット分は無料でお試しできるよ！いっぱい回してね✨",
     "きらきらジャックポットを目指してがんばろー！🦄",
     "ビットコインって難しくないよ！楽しく遊ぼう💕",
     "やったー！次はもっといいことあるかも？🥺"
@@ -982,8 +980,7 @@ const HYPE_QUOTES = {
   ko:[
     "다음 스핀은 대박일지도? 두근두근 💖",
     "귀여운 심볼을 맞춰봐요 🎀",
-    "자투리 시간에 쉽게 sats 모으기 🥰",
-    "첫 10,000 SATS는 완전 무료! 돌려돌려 ✨",
+    "첫 10,000 크레딧은 완전 무료 체험! 돌려돌려 ✨",
     "반짝반짝 잭팟을 향해 가보자! 🦄",
     "비트코인 어렵지 않아요! 즐겁게 놀자 💕",
     "신난다! 다음엔 더 좋은 일이? 🥺"
@@ -997,7 +994,7 @@ const I18N = {
   en: {
     subtitle: "BET SATS · WIN SATS · ON-CHAIN PROOF",
     balance: "BALANCE", won: "SESSION WON", bet: "BET", spin: "SPIN ⚡",
-    free_title: "WELCOME BONUS: 10,000 SATS FREE!",
+    free_title: "WELCOME BONUS: 10,000 FREE CREDITS!",
     free_desc: "First play is on the house. Deposit to keep winning.",
     dep_label: "⚡ DEPOSIT SATS TO CONTINUE",
     msg_ready: "— READY TO SPIN —",
@@ -1010,9 +1007,9 @@ const I18N = {
     stat_spins:"SPINS", stat_wins:"WINS", stat_best:"BIGGEST",
     howto_title: "📖 HOW TO PLAY",
     howto1_title:"FREE FIRST PLAY",
-    howto1_desc: "You start with 10,000 FREE SATS. No deposit needed. Just hit SPIN!",
+    howto1_desc: "You start with 10,000 FREE CREDITS for trial. No deposit needed. Just hit SPIN!",
     howto2_title:"BET & SPIN",
-    howto2_desc: "Set your bet (10–10,000 sats) and spin. Match 3 symbols to win. Even 2 matching symbols returns ×1!",
+    howto2_desc: "Set your bet and spin. Match 3 symbols to win. Even 2 matching symbols returns ×1!",
     howto3_title:"DEPOSIT TO KEEP WINNING",
     howto3_desc: "After free credits run out, deposit via Lightning. Your wallet opens automatically on mobile.",
     howto4_title:"CLIMB THE LEADERBOARD",
@@ -1028,10 +1025,10 @@ const I18N = {
     go_sub: "CREDITS REACHED 0", go_top3: "🏆 TOP 3 RANKING", go_btn: "⚡ DEPOSIT TO CONTINUE", go_biggest: "YOUR BIGGEST WIN"
   },
   ja: {
-    subtitle: "楽しく遊んでSatsをもらお💖",
+    subtitle: "楽しく遊んでSatsの世界を体験💖",
     balance: "残高", won: "今回の獲得", bet: "賭け金", spin: "スピン ⚡",
-    free_title: "🎁 ウェルカムボーナス: 10,000 SATS 無料！",
-    free_desc: "初回プレイは無料。使い切ったら入金して続けよう。",
+    free_title: "🎁 お試しプレイ: 10,000 クレジット分無料！",
+    free_desc: "初回は無料クレジットで体験。使い切ったらSatsを入金して本番に挑戦！",
     dep_label: "⚡ 続けるにはSATSを入金",
     msg_ready: "— スピンする準備OK —",
     msg_spinning: "⚡ 回転中...",
@@ -1043,9 +1040,9 @@ const I18N = {
     stat_spins:"回数", stat_wins:"当たり", stat_best:"最高",
     howto_title: "📖 遊び方",
     howto1_title:"初回無料プレイ",
-    howto1_desc: "10,000 SATSの無料クレジットがあります。入金不要！SPINを押すだけ。",
+    howto1_desc: "10,000 お試しクレジットがあります。入金不要！SPINを押すだけ。",
     howto2_title:"賭けてスピン",
-    howto2_desc: "賭け金を選んでスピン(10〜10,000 sats)。3つ揃えば大勝ち。2つ揃いならベット額がそのまま返ってくるぞ！",
+    howto2_desc: "賭け金を選んでスピン。3つ揃えば大勝ち。2つ揃いならベット額がそのまま返ってくるぞ！",
     howto3_title:"入金して続ける",
     howto3_desc: "無料クレジット終了後は1,000/5,000/10,000 SATSを入金。ウォレットが自動起動します。",
     howto4_title:"ランキングに刻め",
@@ -1057,14 +1054,14 @@ const I18N = {
     engrave:"⚡ 名前を刻む", skip:"スキップ",
     wallet_title:"ライトニングウォレット", wallet_deposit:"＋ 入金",
     lb_note:"勝ち続けて永遠に名前を刻め ⚡",
-    odds_sub:"シンボル出現確率", odds_winrate:"総当選率", odds_house:"ハウスエッジ", odds_exp:"100BETあたり期待値", odds_breakdown:"当選内訳", odds_combo:"組み合わせ", odds_house_note:"ハウスに優位性あり。頑張ってSatsを積み上げろ！🎰",
+    odds_sub:"シンボル出現確率", odds_winrate:"総当選率", odds_house:"ハウスエッジ", odds_exp:"100BETあたり期待値", odds_breakdown:"当選内訳", odds_combo:"組み合わせ", odds_house_note:"ハウスに優位性あり。楽しく遊ぼう！🎰",
     go_sub: "残高が0になりました", go_top3: "🏆 トップ3 ランキング", go_btn: "⚡ 入金して続ける", go_biggest: "今回の最高獲得額"
   },
   ko: {
-    subtitle: "귀엽게 놀면서 Sats 받자💖",
+    subtitle: "귀엽게 놀면서 Sats 세계 체험💖",
     balance: "잔액", won: "이번 획득", bet: "베팅", spin: "스핀 ⚡",
-    free_title: "🎁 웰컴 보너스: 10,000 SATS 무료!",
-    free_desc: "첫 플레이는 무료. 다 쓰면 입금하고 계속하자.",
+    free_title: "🎁 무료 체험: 10,000 크레딧 무료!",
+    free_desc: "처음엔 무료 크레딧으로 체험. 다 쓰면 Sats를 입금하고 본 게임 시작!",
     dep_label: "⚡ 계속하려면 SATS 입금",
     msg_ready: "— 스핀 준비 완료 —",
     msg_spinning: "⚡ 스피닝...",
@@ -1076,9 +1073,9 @@ const I18N = {
     stat_spins:"스핀", stat_wins:"당첨", stat_best:"최고",
     howto_title: "📖 플레이 방법",
     howto1_title:"첫 무료 플레이",
-    howto1_desc: "10,000 SATS 무료 크레딧으로 시작. 입금 불필요! SPIN만 누르면 돼!",
+    howto1_desc: "10,000 무료 크레딧으로 시작. 입금 불필요! SPIN만 누르면 돼!",
     howto2_title:"베팅 & 스핀",
-    howto2_desc: "베팅금액(10~10,000 sats)을 정하고 스핀. 3개 맞추면 당첨. 2개만 맞추면 베팅 금액만큼 반환!",
+    howto2_desc: "베팅금액을 정하고 스핀. 3개 맞추면 당첨. 2개만 맞추면 베팅 금액만큼 반환!",
     howto3_title:"계속하려면 입금",
     howto3_desc: "무료 크레딧 소진 후 1,000/5,000/10,000 SATS 라이트닝으로 입금. 지갑이 자동 실행됩니다.",
     howto4_title:"리더보드에 올라라",
@@ -1090,7 +1087,7 @@ const I18N = {
     engrave:"⚡ 내 이름 새기기", skip:"건너뛰기",
     wallet_title:"라이트닝 지갑", wallet_deposit:"＋ 입금",
     lb_note:"크게 이겨서 여기에 이름을 새기자 ⚡",
-    odds_sub:"심볼 출현 확률", odds_winrate:"총 당첨율", odds_house:"하우스 엣지", odds_exp:"100BET당 기댓값", odds_breakdown:"당첨 내역", odds_combo:"조합", odds_house_note:"하우스가 유리합니다. 행운을 빌어요 — sats 쌓아라! 🎰",
+    odds_sub:"심볼 출현 확률", odds_winrate:"총 당첨율", odds_house:"하우스 엣지", odds_exp:"100BET당 기댓값", odds_breakdown:"당첨 내역", odds_combo:"조합", odds_house_note:"하우스가 유리합니다. 즐겁게 놀자! 🎰",
     go_sub: "잔액이 0이 되었습니다", go_top3: "🏆 톱 3 랭킹", go_btn: "⚡ 입금하고 계속하기", go_biggest: "이번 최고 획득액"
   }
 };
@@ -1226,7 +1223,7 @@ function updateUI() {
       tip.textContent = `🎉 You've won ${sessionWon.toLocaleString()} sats this session!`;
       tip.style.color = 'var(--green)';
     } else {
-      tip.textContent = '🎁 First 10,000 SATS are FREE — just hit SPIN!';
+      tip.textContent = '🎁 First 10,000 credits are FREE to play — just hit SPIN!';
       tip.style.color = 'var(--purple)';
     }
   }
@@ -1561,9 +1558,9 @@ const KAWAII_SHARE = {
   },
   normal: {
     emoji: '🎰✨💖',
-    en: 'Yay! You got Sats 💖 Earning pocket money is so fun and cute ✨',
-    ja: 'やったね！Satsゲット💖 かわいいスロットで楽しくおこづかい稼ぎしちゃお✨',
-    ko: '앗싸! Sats 획득💖 귀여운 슬롯으로 재밌게 용돈 벌어보자✨'
+    en: 'Yay! You got Sats 💖 Stacking is so fun and cute ✨',
+    ja: 'やったね！Satsゲット💖 かわいいスロットで楽しく遊んじゃお✨',
+    ko: '앗싸! Sats 획득💖 귀여운 슬롯으로 재밌게 놀아보자✨'
   }
 };
 
@@ -1636,28 +1633,28 @@ function shareToX() {
   if (pendingWin > 0) {
     if (isJackpot) {
       if (lang === 'ja') {
-        text = `🦄✨ きゃーっ！大当たりのJACKPOT出ちゃった！！ ${lastWin.toLocaleString()} SATS ゲット🎀\n[ ${sym} ] ×${mult} 💖\n\n運使い果たしちゃったかも？🥺\nみんなも初回10,000 SATS無料で遊べるよ！一緒にあそぼっ👇\n#Bitcoin #ライトニングスロット #ポイ活`;
+        text = `🦄✨ きゃーっ！大当たりのJACKPOT出ちゃった！！ ${lastWin.toLocaleString()} SATS ゲット🎀\n[ ${sym} ] ×${mult} 💖\n\n運使い果たしちゃったかも？🥺\n初回10,000クレジット分無料でお試しできるよ！一緒にあそぼっ👇\n#Bitcoin #ライトニングスロット #LightningNetwork`;
       } else if (lang === 'ko') {
-        text = `🦄✨ 꺄아! 대박 JACKPOT 터졌다!! ${lastWin.toLocaleString()} SATS 획득🎀\n[ ${sym} ] ×${mult} 💖\n\n나 오늘 운 다 쓴 건가?🥺\n첫 10,000 SATS 무료로 시작할 수 있어요! 같이 놀자👇\n#Bitcoin #라이트닝슬롯 #앱테크`;
+        text = `🦄✨ 꺄아! 대박 JACKPOT 터졌다!! ${lastWin.toLocaleString()} SATS 획득🎀\n[ ${sym} ] ×${mult} 💖\n\n나 오늘 운 다 쓴 건가?🥺\n첫 10,000 크레딧 무료로 시작할 수 있어요! 같이 놀자👇\n#Bitcoin #라이트닝슬롯 #LightningNetwork`;
       } else {
-        text = `🦄✨ OMG! JACKPOT!! Just won ${lastWin.toLocaleString()} SATS🎀\n[ ${sym} ] ×${mult} 💖\n\nAm I the luckiest or what?🥺\nFirst 10,000 SATS are FREE to play! Come play with me👇\n#Bitcoin #LightningSlot #StackSats`;
+        text = `🦄✨ OMG! JACKPOT!! Just won ${lastWin.toLocaleString()} SATS🎀\n[ ${sym} ] ×${mult} 💖\n\nAm I the luckiest or what?🥺\nFirst 10,000 credits are FREE to play! Come play with me👇\n#Bitcoin #LightningSlot #LightningNetwork`;
       }
     } else {
       if (lang === 'ja') {
-        text = `🎰💕 ライトニングスロットで ${lastWin.toLocaleString()} SATS もらえちゃった！\n[ ${sym} ] ×${mult} ✨\n\nサクッと遊べてたのしい〜🥰\n初回10,000 SATS無料で試せるからやってみてね！👇\n#Bitcoin #可愛いゲーム #おこづかい`;
+        text = `🎰💕 ライトニングスロットで ${lastWin.toLocaleString()} SATS もらえちゃった！\n[ ${sym} ] ×${mult} ✨\n\nサクッと遊べてたのしい〜🥰\n初回10,000クレジット分無料で試せるからやってみてね！👇\n#Bitcoin #可愛いゲーム #LightningNetwork`;
       } else if (lang === 'ko') {
-        text = `🎰💕 라이트닝 슬롯에서 ${lastWin.toLocaleString()} SATS 받았어!\n[ ${sym} ] ×${mult} ✨\n\n가볍게 놀기 너무 재밌다~🥰\n첫 10,000 SATS 무료로 체험해봐요!👇\n#Bitcoin #귀여운게임 #용돈벌기`;
+        text = `🎰💕 라이트닝 슬롯에서 ${lastWin.toLocaleString()} SATS 받았어!\n[ ${sym} ] ×${mult} ✨\n\n가볍게 놀기 너무 재밌다~🥰\n첫 10,000 크레딧 무료로 체험해봐요!👇\n#Bitcoin #귀여운게임 #LightningNetwork`;
       } else {
-        text = `🎰💕 Just grabbed ${lastWin.toLocaleString()} SATS on Lightning Slot!\n[ ${sym} ] ×${mult} ✨\n\nSo fun and easy to play🥰\nTry it now with 10,000 FREE SATS!👇\n#Bitcoin #CuteGames #StackSats`;
+        text = `🎰💕 Just grabbed ${lastWin.toLocaleString()} SATS on Lightning Slot!\n[ ${sym} ] ×${mult} ✨\n\nSo fun and easy to play🥰\nTry it now with 10,000 FREE credits!👇\n#Bitcoin #CuteGames #LightningNetwork`;
       }
     }
   } else {
     if (lang === 'ja') {
-      text = `🕹️🎀 いまライトニングスロットで遊んでるよー！\n[ ${sym} ]\n\n初回10,000 SATS無料でプレゼントもらえるの🎁✨\nサクサク回せて楽しいからみんなもやってみて👇\n#Bitcoin #LightningNetwork`;
+      text = `🕹️🎀 いまライトニングスロットで遊んでるよー！\n[ ${sym} ]\n\n最初はお試し10,000クレジットで無料で遊べるの🎁✨\nサクサク回せて楽しいからみんなもやってみて👇\n#Bitcoin #LightningNetwork`;
     } else if (lang === 'ko') {
-      text = `🕹️🎀 지금 라이트닝 슬롯 하고 있어요!\n[ ${sym} ]\n\n첫 10,000 SATS는 무료 선물로 받을 수 있어🎁✨\n돌리는 재미가 쏠쏠! 모두 함께 고고👇\n#Bitcoin #LightningNetwork`;
+      text = `🕹️🎀 지금 라이트닝 슬롯 하고 있어요!\n[ ${sym} ]\n\n처음엔 10,000 크레딧으로 무료 체험할 수 있어🎁✨\n돌리는 재미가 쏠쏠! 모두 함께 고고👇\n#Bitcoin #LightningNetwork`;
     } else {
-      text = `🕹️🎀 Playing Lightning Slot right now!\n[ ${sym} ]\n\nYou get 10,000 SATS as a free gift to start🎁✨\nIt's super fun to spin, come try it out👇\n#Bitcoin #LightningNetwork`;
+      text = `🕹️🎀 Playing Lightning Slot right now!\n[ ${sym} ]\n\nYou get 10,000 credits as a free trial to start🎁✨\nIt's super fun to spin, come try it out👇\n#Bitcoin #LightningNetwork`;
     }
   }
 
