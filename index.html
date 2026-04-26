@@ -1107,17 +1107,19 @@ function setLang(l) {
 const SYMBOLS   =['⚡','₿','🔑','💎','🌕','🔥'];
 const WEIGHTS   =[2,   4,   6,   8,  12,  18]; 
 const MULTS     = { '⚡⚡⚡':100, '₿₿₿':50, '🔑🔑🔑':20, '💎💎💎':10, '🌕🌕🌕':5, '🔥🔥🔥':3 };
-const PAIR_MULT  = 1; // 1倍（整数）にして端数が出ないように！
+const PAIR_MULT  = 1; 
 const BET_LEVELS =[10, 50, 100, 250, 500, 1000, 2500, 5000, 10000];
 
 /* ============================================================
-   STATE
+   STATE (localStorage連動でリロード時のチート防止)
 ============================================================ */
-let balance    = FREE_CREDITS;
-let sessionWon = 0;
-let spins      = 0;
-let wins       = 0;
-let biggestWin = 0;
+let hasClaimedFree = localStorage.getItem('ls_free_claimed') === 'true';
+let balance    = hasClaimedFree ? parseInt(localStorage.getItem('ls_balance') || '0') : FREE_CREDITS;
+let sessionWon = parseInt(localStorage.getItem('ls_sessionWon') || '0');
+let spins      = parseInt(localStorage.getItem('ls_spins') || '0');
+let wins       = parseInt(localStorage.getItem('ls_wins') || '0');
+let biggestWin = parseInt(localStorage.getItem('ls_biggestWin') || '0');
+
 let betIdx     = 0;
 let isSpinning = false;
 let finalSyms  =['₿','₿','₿'];
@@ -1126,6 +1128,19 @@ let lastWin    = 0;
 let pollTimer  = null;
 let curHash    = "";
 let pendingDepositAmount = 0;
+
+if (!hasClaimedFree) {
+  localStorage.setItem('ls_free_claimed', 'true');
+  localStorage.setItem('ls_balance', balance);
+}
+
+function saveState() {
+  localStorage.setItem('ls_balance', balance);
+  localStorage.setItem('ls_sessionWon', sessionWon);
+  localStorage.setItem('ls_spins', spins);
+  localStorage.setItem('ls_wins', wins);
+  localStorage.setItem('ls_biggestWin', biggestWin);
+}
 
 /* ============================================================
    INIT
@@ -1142,6 +1157,16 @@ window.onload = () => {
   
   spawnSparkles();
   buildOddsPanel();
+
+  // クレジットが減っていたら無料バナーを消す
+  if (balance < FREE_CREDITS) {
+    document.getElementById('free-banner').style.display = 'none';
+  }
+
+  // 残高0の状態でリロードされたら強制的にゲームオーバー画面（ロック）を表示
+  if (hasClaimedFree && balance <= 0) {
+    showGameOver();
+  }
 };
 
 function spawnSparkles() {
@@ -1197,7 +1222,6 @@ function setMaxBet() {
 }
 
 function updateUI() {
-  // 端数が出ないように Math.round で完全に整数化
   balance    = Math.round(balance);
   sessionWon = Math.round(sessionWon);
   document.getElementById('balance-display').innerHTML = balance.toLocaleString() + ' <sup>SATS</sup>';
@@ -1255,6 +1279,8 @@ async function spin() {
   setMsg(I18N[lang].msg_spinning, '');
 
   balance -= bet;
+  saveState(); // ★スピンのたびに状態を保存！
+  
   finalSyms =[weightedRand(), weightedRand(), weightedRand()];
   for (let i=0; i<3; i++) buildReel(i, finalSyms[i]);
   updateUI();
@@ -1286,6 +1312,7 @@ function resolveResult(bet) {
 
   const winAmt = Math.round(bet * mult);
   spins++;
+  saveState(); // ★スピン回数などを保存
 
   if (winAmt > 0) {
     wins++;
@@ -1294,6 +1321,7 @@ function resolveResult(bet) {
     pendingWin  = winAmt;
     lastWin     = winAmt;
     if (winAmt > biggestWin) biggestWin = winAmt;
+    saveState(); // ★勝利時の残高増加などを保存
 
     for (let i=0; i<3; i++) {
       const r = document.getElementById('reel'+i);
@@ -1301,7 +1329,6 @@ function resolveResult(bet) {
     }
     spawnConfetti();
 
-    // 100倍をジャックポット、20倍以上をBigWinとする
     const isJackpot = (MULTS[key] === 100);
     const isBigWin  = (MULTS[key] >= 20);
 
@@ -1311,7 +1338,6 @@ function resolveResult(bet) {
       setMsg(I18N[lang].msg_win + winAmt.toLocaleString() + ' SATS', 'win');
     }
 
-    // デカい当たりの時だけ途中で名前登録画面を出す
     if (isBigWin || isJackpot) {
       const title = isJackpot ? '⚡ JACKPOT! ⚡' : '₿ BIG WIN! ₿';
       document.getElementById('win-title').textContent  = title;
@@ -1325,7 +1351,7 @@ function resolveResult(bet) {
   }
 
   if (balance <= 0) {
-    showGameOver(); // 残高0で必ずゲームオーバー画面（名前入力可能）を表示
+    showGameOver(); 
   }
 
   updateUI();
@@ -1338,13 +1364,12 @@ function resolveResult(bet) {
 }
 
 /* ============================================================
-   GAME OVER FLOW (残高0時に絶対に名前を入力できるようにする)
+   GAME OVER FLOW
 ============================================================ */
 function showGameOver() {
   document.getElementById('gameover-overlay').classList.add('open');
   document.getElementById('go-biggest-win').textContent = biggestWin.toLocaleString();
   
-  // 今まで1度でも当たっていれば登録可能にする
   if (biggestWin > 0) {
     document.getElementById('go-record-area').style.display = 'block';
     document.getElementById('btn-go-submit').disabled = false;
@@ -1361,14 +1386,13 @@ function submitGameOverWin() {
   const btn = document.getElementById('btn-go-submit');
   btn.textContent = 'SAVING...'; btn.disabled = true;
 
-  // ゲームオーバー時は、そのセッションの最高獲得額(biggestWin)を登録
   const url = `${GAS_URL}?action=record&name=${encodeURIComponent(name)}&sats=${biggestWin}&fiat=0`;
   fetch(url)
     .then(r => r.json())
     .then(data => {
       btn.textContent = 'SAVED! 🏆';
-      fetchTop3(); // オーバーレイ内のランキング更新
-      fetchLeaderboard(); // メイン画面のランキングも更新
+      fetchTop3(); 
+      fetchLeaderboard(); 
     })
     .catch(() => {
       btn.textContent = 'ERROR / TRY AGAIN';
@@ -1464,6 +1488,7 @@ function startPolling() {
         clearInterval(pollTimer);
         closeModal();
         balance += pendingDepositAmount;
+        saveState(); // ★入金時にも残高を保存！
         updateUI();
         setMsg(`+${pendingDepositAmount.toLocaleString()} SATS DEPOSITED! ⚡`, 'win');
       }
@@ -1480,6 +1505,7 @@ function verifyPayment() {
       if (pollTimer) clearInterval(pollTimer);
       closeModal();
       balance += pendingDepositAmount;
+      saveState(); // ★入金時にも残高を保存！
       updateUI();
       setMsg(`+${pendingDepositAmount.toLocaleString()} SATS DEPOSITED! ⚡`, 'win');
     } else {
@@ -1658,7 +1684,6 @@ function shareToX() {
     }
   }
 
-  // OGPやシェア用のURLを正しく LNbits_slot2 に変更
   const url = encodeURIComponent("https://ck121212195.github.io/LNbits_slot2/");
   window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${url}`, '_blank');
 }
