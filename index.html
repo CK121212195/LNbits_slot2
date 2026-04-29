@@ -108,51 +108,6 @@
     }
 
     /* ============================================================
-       SPLASH SCREEN
-    ============================================================ */
-    #splash-screen {
-      position: fixed;
-      top: 0; left: 0; 
-      width: 100vw; height: 100vh;
-      background: #0c0c14;
-      z-index: 99999;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: opacity 0.5s ease;
-    }
-    .splash-slot-box {
-      height: 60px;
-      overflow: hidden;
-      background: rgba(0, 0, 0, 0.8);
-      border: 2px solid var(--orange);
-      border-radius: 12px;
-      box-shadow: 0 0 40px rgba(255, 107, 0, 0.6);
-      padding: 0 20px;
-    }
-    .splash-reel {
-      display: flex;
-      flex-direction: column;
-    }
-    .splash-item {
-      height: 60px;
-      line-height: 60px;
-      font-family: 'Press Start 2P', monospace;
-      font-size: 13px;
-      color: #fff;
-      text-align: center;
-      white-space: nowrap;
-      letter-spacing: 1px;
-    }
-    .splash-item.jackpot {
-      color: var(--gold);
-      text-shadow: 0 0 15px var(--orange);
-    }
-    @media (min-width: 480px) {
-      .splash-item { font-size: 18px; }
-    }
-
-    /* ============================================================
        HEADER
     ============================================================ */
     .header {
@@ -684,16 +639,6 @@
 </head>
 <body>
 
-<!-- ▼▼ オープニングアニメーション ▼▼ -->
-<div id="splash-screen">
-  <div class="splash-slot-box">
-    <div class="splash-reel" id="splash-reel">
-      <!-- ここにJSで回転するテキストが入ります -->
-    </div>
-  </div>
-</div>
-<!-- ▲▲ オープニングアニメーション ▲▲ -->
-
 <div class="ambient"></div>
 
 <!-- ============================================================
@@ -1201,37 +1146,6 @@ function saveState() {
    INIT
 ============================================================ */
 window.onload = () => {
-  // ▼▼ オープニングアニメーションの実行 ▼▼
-  const splashReel = document.getElementById('splash-reel');
-  const dummyWords =['🎰 7 7 7 🎰', '💎 MEGA WIN 💎', '🔥 STACK SATS 🔥', '🚀 TO THE MOON 🚀', '💰 BIG PAYOUT 💰'];
-  
-  // ダミーのテキストを20個ループで生成してスロットの長さを確保
-  let splashHtml = '';
-  for(let i = 0; i < 20; i++) {
-    splashHtml += `<div class="splash-item">${dummyWords[Math.floor(Math.random() * dummyWords.length)]}</div>`;
-  }
-  // 一番最後に本命のタイトルを追加
-  splashHtml += `<div class="splash-item jackpot">⚡ LIGHTNING SLOT ⚡</div>`;
-  splashReel.innerHTML = splashHtml;
-
-  // 少し待ってから高速回転スタート！
-  setTimeout(() => {
-    // 20個分の高さ (20 * 60px = 1200px) を一気に上にスライド
-    splashReel.style.transition = 'transform 3.5s cubic-bezier(0.1, 0.85, 0.15, 1)';
-    splashReel.style.transform = `translateY(-1200px)`;
-    
-    // ピタッと止まって余韻を残した後、フェードアウトしてゲーム画面へ
-    setTimeout(() => {
-      const splashScreen = document.getElementById('splash-screen');
-      splashScreen.style.opacity = '0'; // ふわっと消える
-      setTimeout(() => {
-        splashScreen.style.display = 'none'; // 完全に非表示にする
-      }, 500);
-    }, 4200); // 回転時間 + 止まった後のタメ
-  }, 300);
-  // ▲▲ オープニング終了 ▲▲
-
-
   buildAllReels();
   updateUI();
   fetchLeaderboard();
@@ -1682,9 +1596,8 @@ function showWinActions() {
   
   const isJackpot = lastWin >= BET_LEVELS[betIdx] * 50;
   const isBigWin  = lastWin >= BET_LEVELS[betIdx] * 8;
-  const kType = isJackpot ? 'jackpot' : isBigWin ? 'normal'; // 修正: bigwin -> normalに統合？(要件次第ですが一旦元に戻します)
-  // ... 上で定義した通り
-  const kMsg = KAWAII_SHARE[isJackpot ? 'jackpot' : isBigWin ? 'bigwin' : 'normal'];
+  const kType = isJackpot ? 'jackpot' : isBigWin ? 'bigwin' : 'normal';
+  const kMsg = KAWAII_SHARE[kType];
   
   const emojiEl = document.getElementById('win-share-emoji');
   const textEl  = document.getElementById('win-share-text');
